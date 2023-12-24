@@ -1,27 +1,135 @@
-import type { Config } from 'tailwindcss'
-import defaultTheme from 'tailwindcss/defaultTheme'
+import type { Config } from "tailwindcss"
 
-export default <Partial<Config>>{
+export default {
+  content: [
+    `**/components/**/*.{vue,js}`,
+    `**/composables/**/*.{js,ts}`,
+    `**/layouts/**/*.vue`,
+    `**/pages/**/*.vue`,
+    `**/plugins/**/*.{js,ts}`,
+    `**/store/**/*.{js,ts}`,
+    `app.{js,ts,vue}`,
+    `App.{js,ts,vue}`,
+  ],
+  plugins: [require("@headlessui/tailwindcss")],
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ['DM Sans', 'DM Sans fallback', ...defaultTheme.fontFamily.sans]
+    boxShadow: {
+      base: "0px 4px 8px 0px rgba(0, 0, 0, 0.02)",
+      lg: "0px 10px 30px 0px rgba(0, 0, 0, 0.08)",
+    },
+    colors: {
+      black: "#000000",
+      error: {
+        100: "#FEF0F0",
+        200: "#FCE1E1",
+        300: "#FBCACA",
+        400: "#F58A8A",
+        50: "#FEF6F6",
+        600: "#C43737",
+        700: "#A32E2E",
+        800: "#782222",
+        900: "#4C1515",
+        DEFAULT: "#EE4343",
       },
-      colors: {
-        green: {
-          50: '#EFFDF5',
-          100: '#D9FBE8',
-          200: '#B3F5D1',
-          300: '#75EDAE',
-          400: '#00DC82',
-          500: '#00C16A',
-          600: '#00A155',
-          700: '#007F45',
-          800: '#016538',
-          900: '#0A5331',
-          950: '#052e16'
-        }
-      }
-    }
-  }
-}
+      neutral: {
+        100: "#F3F4F6",
+        200: "#E5E7EB",
+        300: "#CFD4DB",
+        400: "#9BA3AF",
+        50: "#F9FAFB",
+        600: "#4A5462",
+        700: "#374151",
+        800: "#1F2937",
+        900: "#111827",
+        DEFAULT: "#6A717F",
+      },
+      primary: {
+        100: "#EDF9F9",
+        200: "#D6F1F1",
+        300: "#B8E7E6",
+        400: "#61C9C7",
+        50: "#F2FBFB",
+        600: "#00908E",
+        700: "#007270",
+        800: "#005453",
+        900: "#003635",
+        DEFAULT: "#00A8A5",
+      },
+      secondary: {
+        100: "#FEF7EB",
+        200: "#FDF0D8",
+        300: "#FCE4BA",
+        400: "#F9C367",
+        50: "#FFFAF3",
+        600: "#C98208",
+        700: "#A76C07",
+        800: "#7B5005",
+        900: "#4E3303",
+        DEFAULT: "#F49E0A",
+      },
+      success: {
+        100: "#EDFAF2",
+        200: "#DBF6E5",
+        300: "#C1EED2",
+        400: "#75DA9B",
+        50: "#F4FCF7",
+        600: "#1BA14C",
+        700: "#16853F",
+        800: "#11622F",
+        900: "#0B3F1E",
+        DEFAULT: "#21C45D",
+      },
+      tertiary: {
+        100: "#F4FAFE",
+        200: "#E5F4FD",
+        300: "#D2EBFB",
+        400: "#9BD4F6",
+        50: "#F7FCFE",
+        600: "#4E98C6",
+        700: "#417EA5",
+        800: "#305D79",
+        900: "#1E3B4D",
+        DEFAULT: "#5EB9F1",
+      },
+      transparent: "transparent",
+      warning: {
+        100: "#FEF7EB",
+        200: "#FDF0D8",
+        300: "#FCE4BA",
+        400: "#F9C367",
+        50: "#FFFAF3",
+        600: "#C98208",
+        700: "#A76C07",
+        800: "#7B5005",
+        900: "#4E3303",
+        DEFAULT: "#F49E0A",
+      },
+      white: "#FFFFFF",
+    },
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: "1rem",
+        sm: "2rem",
+      },
+    },
+    fontFamily: {
+      sans: ["Inter", "sans-serif"],
+    },
+    fontSize: {
+      "display-lg": ["1.75rem", "120%"],
+      "display-md": ["1.5rem", "120%"],
+      "display-sm": ["1.25rem", "120%"],
+      "display-xs": ["1.125rem", "120%"],
+      lg: ["1rem", "120%"],
+      md: ["0.875rem", "120%"],
+      sm: ["0.8125rem", "120%"],
+      xs: ["0.75rem", "120%"],
+    },
+    fontWeight: {
+      medium: "500",
+      regular: "400",
+      semibold: "600",
+    },
+  },
+} satisfies Config

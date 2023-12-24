@@ -1,125 +1,76 @@
-![nuxt-ui-pro-docs-template](https://github.com/nuxt-ui-pro/docs/assets/904724/67fc15a7-92f6-4566-95b9-fe099012473c)
+# Шаблон Nuxt 3
 
-# Nuxt UI Pro - Docs template
+Шаблон Nuxt 3 приложения с настроенными зависимостями, линтерами и т.д.
 
-[![Nuxt UI Pro](https://img.shields.io/badge/Made%20with-Nuxt%20UI%20Pro-00DC82?logo=nuxt.js&labelColor=020420)](https://ui.nuxt.com/pro)
-[![Nuxt Studio](https://img.shields.io/badge/Open%20in%20Nuxt%20Studio-18181B?&logo=nuxt.js&logoColor=3BB5EC)](https://nuxt.studio/themes/docs)
+## Что нужно сделать первым коммитом
 
-- [Live demo](https://nuxt-ui-pro-template-docs.vercel.app/)
-- [Play on Stackblitz](https://stackblitz.com/github/nuxt-ui-pro/docs)
-- [Documentation](https://ui.nuxt.com/pro/guide)
-- [Clone on Nuxt Studio](https://nuxt.studio/themes/docs)
+- [ ]  Изменить в файле `.github/workflows/release.yml` репозиторий
+- [ ]  Изменить `hostname` в `nuxt.config.ts`
+- [ ]  Удалить этот раздел
 
-## Quick Start
+## Оглавление
 
-```bash [Terminal]
-npx nuxi init -t github:nuxt-ui-pro/docs
+- [Что нужно сделать первым коммитом](#что-нужно-сделать-первым-коммитом)
+- [Оглавление](#оглавление)
+- [Локальная разработка](#локальная-разработка)
+- [Продакшн](#продакшн)
+- [Тестирование](#тестирование)
+- [Линт](#линт)
+- [Локальные переменные](#локальные-переменные)
+
+## Локальная разработка
+
+1. Создать `.env` файл по примеру из `.env.example`
+1. Установить зависимости
+
+   ```sh
+   pnpm install
+   ```
+
+1. Запустить `dev`-сервер
+
+   ```sh
+   pnpm dev
+   ```
+
+## Продакшн
+
+Сборка в продакшн
+
+```sh
+pnpm build
 ```
 
-## Setup
+Превью продакшн билда
 
-Make sure to install the dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+```sh
+pnpm preview
 ```
 
-## Development Server
+## Тестирование
 
-Start the development server on `http://localhost:3000`:
+Проверка типов
 
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+```sh
+pnpm typecheck
 ```
 
-## Production
+## Линт
 
-Build the application for production:
+Запуск ESLint
 
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+```sh
+pnpm lint
 ```
 
-Locally preview production build:
+Запуск Prettier
 
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+```sh
+pnpm prettier
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Локальные переменные
 
-## Nuxt Studio integration
-
-Add `@nuxthq/studio` dependency to your package.json:
-
-```bash
-# npm
-npm install --save-dev @nuxthq/studio
-
-# pnpm
-pnpm add -D @nuxthq/studio
-
-# yarn
-yarn add -D @nuxthq/studio
-
-# bun
-bun add -d @nuxthq/studio
-```
-
-Add this module to your `nuxt.config.ts`:
-
-```ts
-export default defineNuxtConfig({
-  ...
-  modules: [
-    ...
-    '@nuxthq/studio'
-  ]
-})
-```
-
-Read more on [Nuxt Studio docs](https://nuxt.studio/docs/projects/setup).
-
-## Renovate integration
-
-Install [Renovate GitHub app](https://github.com/apps/renovate/installations/select_target) on your repository and you are good to go.
+| Название переменной | Описание          | Пример          |
+| ------------------- | ----------------- | --------------- |
+| `EXAMPLE`           | Пример переменной | `example value` |

@@ -1,4 +1,15 @@
-dist
+pnpm-lock.yaml
+CHANGELOG.md
+Dockerfile
+
+# Перенесено из .gitignore
 node_modules
-.output
+*.log*
 .nuxt
+.nitro
+.cache
+.output
+.env
+dist
+.idea/
+.eslintcache

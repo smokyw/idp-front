@@ -1,40 +1,95 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
-export default defineNuxtConfig({
-  extends: ['@nuxt/ui-pro'],
-  modules: [
-    '@nuxt/content',
-    '@nuxt/ui',
-    '@nuxthq/studio',
-    '@nuxtjs/fontaine',
-    '@nuxtjs/google-fonts',
-    'nuxt-og-image'
-  ],
-  hooks: {
-    // Define `@nuxt/ui` components as global to use them in `.md` (feel free to add those you need)
-    'components:extend': (components) => {
-      const globals = components.filter((c) => ['UButton'].includes(c.pascalName))
+import { intercom } from "./store/scripts"
 
-      globals.forEach((c) => c.global = true)
-    }
+export default defineNuxtConfig({
+  $production: {
+    app: {
+      head: {
+        script: [intercom],
+      },
+    },
   },
-  ui: {
-    icons: ['heroicons', 'simple-icons']
+  appConfig: {
+    nuxtIcon: {
+      size: "20px",
+    },
   },
-  // Fonts
-  fontMetrics: {
-    fonts: ['DM Sans']
+  experimental: {
+    typedPages: true,
   },
+  extends: [
+    "./modules/admin",
+    "./modules/auth",
+    "./modules/ipr",
+    "./modules/employees",
+  ],
   googleFonts: {
-    display: 'swap',
-    download: true,
+    display: "swap",
     families: {
-      'DM+Sans': [400, 500, 600, 700]
-    }
+      Inter: [400, 500, 600],
+    },
   },
-  routeRules: {
-    '/api/search.json': { prerender: true },
+  i18n: {
+    compilation: {
+      strictMessage: false,
+    },
+    defaultLocale: "ru",
+    langDir: "assets/lang/",
+    lazy: true,
+    locales: [
+      {
+        code: "ru",
+        file: "ru.json",
+        iso: "ru-RU",
+        name: "Русский",
+      },
+      {
+        code: "en",
+        file: "en.json",
+        iso: "en-GB",
+        name: "English",
+      },
+      {
+        code: "fr",
+        file: "fr.json",
+        iso: "fr-FR",
+        name: "Français",
+      },
+    ],
+    types: "composition",
   },
-  // Devtools / Typescript
-  devtools: { enabled: true },
-  typescript: { strict: false }
+  imports: {
+    dirs: ["./composables/**", "./store/**", "./utils/**"],
+  },
+  modules: [
+    "@nuxtjs/google-fonts",
+    "@nuxtjs/i18n",
+    "@nuxtjs/tailwindcss",
+    "@pinia-plugin-persistedstate/nuxt",
+    "@pinia/nuxt",
+    "@vue-email/nuxt",
+    "@vueuse/nuxt",
+    "nuxt-headlessui",
+    "nuxt-icon",
+    "nuxt-svgo",
+  ],
+  postcss: {
+    plugins: {
+      "tailwindcss/nesting": "postcss-nesting",
+    },
+  },
+  router: {
+    options: {
+      scrollBehaviorType: "smooth",
+    },
+  },
+  ssr: false,
+  svgo: {
+    defaultImport: "component",
+  },
+  tailwindcss: {
+    viewer: false,
+  },
+  vue: {
+    defineModel: true,
+  },
 })

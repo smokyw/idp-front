@@ -1,0 +1,378 @@
+{
+  "auth": {
+    "feedback": {
+      "answer": "Thanks for reaching out!<br /><br />You'll get an answer within 24 hours at <b class='text-neutral-900'>{email}</b>, that you provided when you applied.",
+      "email": "Reply email",
+      "emailHint": "The response to your request will arrive at this email.",
+      "emailPlaceholder": "Enter email",
+      "message": "Your request.",
+      "messagePlaceholder": "Describe what your issue is...",
+      "messageSent": "Request sent",
+      "sendRequest": "Send Request",
+      "thanks": "Thanks, waiting for",
+      "title": "Customer Service"
+    },
+    "login": "Enter login",
+    "newPassword": {
+      "placeholder": "Enter new password",
+      "set": "Set Password",
+      "title": "New Password"
+    },
+    "password": "Enter password",
+    "remember": "Remember me",
+    "reset": "Reset Password",
+    "resetPassword": {
+      "checkEmail": "Check your email ",
+      "hint": "Type in login. An email will be sent to the linked email with a link to reset your password.",
+      "return": "Return to authorization.",
+      "success": "We have sent a password reset email to the email bound to the specified login.<br /><br />Follow the password reset link in the email to set a new password.",
+      "title": " Reset Password"
+    },
+    "signIn": "Sign In",
+    "signOut": "Sign Out"
+  },
+  "employees": {
+    "actionStatuses": {
+      "all": "Everything",
+      "required": "Requires action"
+    },
+    "actions": {
+      "addTarget": {
+        "button": "Apply {number}",
+        "description": "Here you can create new training goals for your team in bulk. Once applied, the goals will be automatically assigned to the selected employees.",
+        "label": "Add target",
+        "title": "Creating a new goal"
+      },
+      "approveIdp": {
+        "button": "Agree",
+        "description": "The IPR status will be changed for {number} employees.",
+        "label": "Agree",
+        "title": "Do you want to reconcile the selected IPRs?"
+      },
+      "createIdp": {
+        "button": "Open",
+        "description": "You want to open a new IPR {year} in bulk. After confirmation, the IPR will automatically be opened to the selected employees.",
+        "label": "New IPR",
+        "title": "Open new IPRs?"
+      },
+      "rejectIdp": {
+        "button": "For revision",
+        "description": "The IPR status will be changed for {number} employees.",
+        "label": "For revision",
+        "title": "Do you want to send the selected IPRs for revision?"
+      }
+    },
+    "approvalStatuses": {
+      "approval": "Approval ({approved}/{all})",
+      "approved": "Approved",
+      "cancelled": "Under revision",
+      "draft": "Draft",
+      "needApproval": "Requires approval",
+      "no_idp": "No IPR",
+      "not_approved": "Under revision",
+      "null": "Draft",
+      "undefined": "No data on IPR"
+    },
+    "columns": {
+      "created_at": "Added",
+      "external_id": "ID",
+      "full_name": "Employees",
+      "idp_price": "IPR cost",
+      "idp_progress": "IPR progress",
+      "idp_status": "IPR status"
+    },
+    "filters": {
+      "showAchieved": "Show fired",
+      "statuses": {
+        "approval": "Approval",
+        "approved": "Approved",
+        "cancelled": "Under revision",
+        "draft": "Draft",
+        "no_idp": "No IPR",
+        "not_approved": "Under revision",
+        "undefined": "No data on IPR"
+      }
+    },
+    "page": {
+      "deleteIdp": {
+        "title": "Delete IPR {year} exactly?"
+      },
+      "idpPrice": "Cost of the development plan",
+      "newIdp": {
+        "description": "You want to open a new Individual Development Plan {year}",
+        "title": "Open a new IPR?"
+      },
+      "noIdp": {
+        "description": "Open the IPR so that the employee can start training.",
+        "new": "Open IPR {year}",
+        "title": "The employee does not have an IPR yet"
+      },
+      "noTargets": {
+        "description": "Add goals to improve your skills.",
+        "title": "No active targets yet"
+      },
+      "profile": "Profile",
+      "progress": "Learning progress",
+      "return": "Return to list of employees",
+      "showActions": "Show negotiation options",
+      "statusButtons": {
+        "approvalRoute": "Approval Route",
+        "deleteIpr": "Delete IPR",
+        "generateReport": "Generate report",
+        "history": "History of approval",
+        "openApproval": "Open approval",
+        "startApproval": "Initiate approval"
+      },
+      "targets": "Goals"
+    },
+    "search": "Search by employee or ID",
+    "targetsCompleted": "Targets Completed"
+  },
+  "errors": {
+    "auth": {
+      "password_requirements_error": "Password does not meet requirement",
+      "reset_password_error": "The password reset link is invalid"
+    },
+    "base": {
+      "access_denied": "Access denied",
+      "bad_request": "request_error",
+      "internal_server_error": "Internal server error",
+      "object_not_found": "Object not found",
+      "page_not_found": "Page not found",
+      "too_many_failed_login_attempts": "Too many failed login attempts",
+      "too_many_requests": "You are making requests too often",
+      "unauthorized": "Invalid login or password",
+      "unknown_error": "Unknown error",
+      "validation_error": "Field validation error"
+    },
+    "tryAgain": "Try again"
+  },
+  "ipr": {
+    "approval": {
+      "actions": {
+        "approve": "Agree",
+        "cancel": "Cancel approval",
+        "reject": "For refinement",
+        "resend": "Reconcile"
+      },
+      "approved": "IPR agreed",
+      "attempt": "Attempt {index}",
+      "awaitingApproval": "Awaiting approval",
+      "cancel": {
+        "description": "You will not be able to restore your IPR status after cancellation.",
+        "no": "No, I've changed my mind",
+        "title": "Are you sure to cancel the approval?",
+        "yes": "Yes, cancel"
+      },
+      "comment": "Comment",
+      "edit": {
+        "addApprover": "Add approval participant",
+        "addStage": "Add stage",
+        "approvers": "Approval participants",
+        "stageName": "Enter the stage name",
+        "stageTitle": "Stage name",
+        "title": "Editing approval steps"
+      },
+      "lessThanMinute": "less than a minute",
+      "onApprove": "To be approved {date}",
+      "reapprove": {
+        "description": "Introducing new goals will require a review of the current plan.",
+        "title": "It will be necessary to reagree on the plan"
+      },
+      "send": "Submit for approval",
+      "stages": "Approval stages",
+      "startApprovalButton": {
+        "approval": "Approval ({approved}/{all})",
+        "approved": "Agreed",
+        "cancelled": "Approval",
+        "not_approved": "Аpproval",
+        "null": "Agree"
+      },
+      "status": {
+        "approval": "Sent for approval",
+        "approved": "Sent for approval",
+        "cancelled": "Reverted",
+        "none": "Awaiting approval",
+        "not_approved": "Sent for approval"
+      },
+      "voteStrategy": {
+        "first": "The first reviewer will approve",
+        "unanimous": "All participants will agree"
+      }
+    },
+    "targets": {
+      "comments": {
+        "placeholder": "Write a comment",
+        "you": "You"
+      },
+      "delete": {
+        "description": "You will not be able to recover the target after deletion.",
+        "descriptionApproved": "Removing a goal from the IPR will require re-approval of your Individual Development Plan (IPR).",
+        "no": "No, I've changed my mind",
+        "title": "Is it accurate to delete the target?",
+        "yes": "Yes, remove"
+      },
+      "emptyState": {
+        "active": {
+          "description": "Add a goal to develop your skills.",
+          "title": "You don't have any goals yet"
+        },
+        "completed": {
+          "description": "To complete an objective, mark it as \"Completed\" or \"Cancelled\".",
+          "title": "You don't yet have completed objectives"
+        }
+      },
+      "materials": {
+        "paid": "Paid",
+        "reasons": {
+          "makeReason": "Justifier",
+          "placeholder": "Why is it important for you to study this material?",
+          "reasoned": "Justified",
+          "title": "Raison d'être"
+        },
+        "requiredReason": "For paid materials, justification is required.",
+        "skills": "Skills covered",
+        "title": "Material"
+      },
+      "new": {
+        "add": "Add a goal",
+        "create": "Create a goal",
+        "general": {
+          "deadline": "To be completed by",
+          "description": {
+            "label": "Description",
+            "placeholder": "What needs to be done to achieve the objective"
+          },
+          "name": {
+            "label": "Target name",
+            "placeholder": "Enter the name of the target"
+          }
+        },
+        "materials": {
+          "new": "Add equipment",
+          "title": "Study material"
+        },
+        "skills": {
+          "new": "Add a skill",
+          "title": "Development skills"
+        },
+        "title": "New target"
+      },
+      "noPlan": {
+        "description": "Contact your supervisor.",
+        "title": "You can’t formulate a development plan yet"
+      },
+      "outdated": "Outdated",
+      "pageTitles": {
+        "deadline": "Deadline",
+        "description": "Description",
+        "levels": "Ownership levels",
+        "name": "Title",
+        "priority": "Priority",
+        "reason": "Reason",
+        "related": "Applies to",
+        "skills": "Covered skills",
+        "status": "Status",
+        "title": "Goal"
+      },
+      "priority": {
+        "high": "High",
+        "low": "Low",
+        "medium": "Medium"
+      },
+      "skills": {
+        "currentLevel": "Current level",
+        "requiredLevel": "Level required",
+        "types": {
+          "competency": "Competence",
+          "competency_cluster": "Competence cluster",
+          "skill": "Skill"
+        }
+      },
+      "sortOptions": {
+        "created_at-asc": "New first",
+        "created_at-desc": "Old first",
+        "deadline": "By deadline",
+        "priority": "By priority"
+      },
+      "status": {
+        "cancelled": "Canceled",
+        "done": "Done",
+        "in_progress": "In progress",
+        "not_started": "Not started"
+      },
+      "statusGroups": {
+        "active": "Active",
+        "completed": "Completed"
+      },
+      "tabs": {
+        "comments": "Comments",
+        "general": "General information",
+        "materials": "Materials",
+        "skills": "Skills"
+      },
+      "till": "Till {date}"
+    },
+    "title": "Development plan"
+  },
+  "navigation": {
+    "developmentPlan": "Development plan",
+    "employees": "Employees"
+  },
+  "success": {
+    "approvalStart": {
+      "title": "The development plan has been sent for approval"
+    },
+    "idpCollection": {
+      "addTarget": {
+        "title": "New goals created"
+      },
+      "approveIdp": {
+        "title": "Development plans have been agreed upon"
+      },
+      "createIdp": {
+        "title": "New IPRs successfully opened"
+      },
+      "rejectIdp": {
+        "title": "Development plans have been sent for revision"
+      }
+    },
+    "idpCreated": {
+      "title": "New IPR successfully opened"
+    },
+    "passwordUpdated": {
+      "description": "Use your new password to log in",
+      "title": "Password has been updated"
+    },
+    "targetCreated": {
+      "description": "Create a new target or move on to agreeing a plan",
+      "title": "Target created successfully"
+    },
+    "targetDeleted": {
+      "title": "Target successfully deleted"
+    },
+    "targetEdited": {
+      "title": "Target successfully changed"
+    }
+  },
+  "system": {
+    "apply": "Apply",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "create": "Create",
+    "delete": "Delete",
+    "edit": "Edit",
+    "emptyFilters": "Try setting up filters differently or use the search function for accurate results.",
+    "emptySearch": "Sorry, nothing was found for your request.",
+    "filters": "Filters",
+    "notSelected": "Not selected",
+    "open": "Open",
+    "percent": "{number}%",
+    "reset": "Reset to zero",
+    "save": "Save",
+    "search": "Search",
+    "select": "Select",
+    "send": "Send in",
+    "showResults": "Show by: {number}"
+  }
+}

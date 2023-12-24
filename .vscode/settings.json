@@ -1,0 +1,32 @@
+{
+  "cSpell.language": "en,ru",
+  "cSpell.words": ["бекенд", "idps", "klona", "Svgo"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "git.branchProtection": ["main"],
+  "git.followTagsWhenSync": true,
+  "gitlens.defaultDateFormat": "D MMMM YYYY в H:mm",
+  "gitlens.defaultDateLocale": null,
+  "gitlens.defaultTimeFormat": "H:mm",
+  "gitlens.statusBar.enabled": false,
+  "i18n-ally.displayLanguage": "ru",
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.localesPaths": ["assets/lang"],
+  "i18n-ally.sourceLanguage": "ru",
+  "markdown.extension.toc.levels": "2..6",
+  "search.exclude": {
+    "**/.nuxt": true,
+    "**/.output": true,
+    "**/node_modules": true
+  },
+  "tailwindCSS.emmetCompletions": true,
+  "typescript.tsdk": "node_modules/typescript/lib"
+}

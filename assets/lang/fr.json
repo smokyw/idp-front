@@ -1,0 +1,279 @@
+{
+  "auth": {
+    "feedback": {
+      "answer": "Merci pour votre message!<br /><br />Votre réponse vous sera envoyée dans les 24 heures à l'adresse <b class='text-neutral-900'>{email}</b>, à laquelle vous avez indiqué lors de votre message.",
+      "email": "Courriel pour le retour d'information",
+      "emailHint": "Répondez à cette adresse pour obtenir la réponse.",
+      "emailPlaceholder": "Saisissez votre courriel",
+      "message": "Votre message",
+      "messagePlaceholder": "Descrivez votre problème...",
+      "messageSent": "Votre message a été envoyé",
+      "sendRequest": "Envoyer le message",
+      "thanks": "Merci, vous attendez",
+      "title": "Service de support"
+    },
+    "login": "Saisissez votre identifiant",
+    "newPassword": {
+      "placeholder": "Saisissez un nouveau mot de passe",
+      "set": "Définir le mot de passe",
+      "title": "Nouveau mot de passe"
+    },
+    "password": "Saisissez votre mot de passe",
+    "remember": "Se souvenir de moi",
+    "reset": "Resetter le mot de passe",
+    "resetPassword": {
+      "checkEmail": "Vérifiez votre courriel",
+      "hint": "Saisissez votre identifiant. Un message sera envoyé à l'adresse indiquée pour vous aider à réinitialiser votre mot de passe.",
+      "return": "Retourner à la page d'authentification",
+      "success": "Nous avons envoyé un message à l'adresse indiquée pour vous aider à réinitialiser votre mot de passe. Vérifiez votre boîte de courriel pour voir le message.",
+      "title": "Réinitialiser le mot de passe"
+    },
+    "signIn": "Connexion",
+    "signOut": "Déconnexion"
+  },
+  "employees": {
+    "approvalStatuses": {
+      "approval": "Approbation ({approved}/{all})",
+      "approved": "D'accord",
+      "cancelled": "En cours",
+      "draft": "Brouillon",
+      "not_approved": "En cours",
+      "undefined": "Aucune donnée sur les droits de propriété intellectuelle"
+    },
+    "columns": {
+      "created_at": "Ajouté",
+      "full_name": "Le personnel",
+      "id": "ID",
+      "idp_price": "Coût des droits de propriété intellectuelle",
+      "idp_progress": "Progrès en matière de DPI",
+      "idp_status": "État des droits de propriété intellectuelle"
+    },
+    "search": "Recherche par employé ou ID"
+  },
+  "errors": {
+    "auth": {
+      "password_requirements_error": "Le mot de passe ne correspond pas aux critères",
+      "reset_password_error": "La clé de réinitialisation de mot de passe est inactive"
+    },
+    "base": {
+      "access_denied": "Accès refusé",
+      "bad_request": "Erreur de requête",
+      "internal_server_error": "Erreur interne du serveur",
+      "object_not_found": "Objet non trouvé",
+      "page_not_found": "Page non trouvée",
+      "too_many_failed_login_attempts": "Trop de tentatives de connexion incorrectes",
+      "too_many_requests": "Trop de requêtes",
+      "unauthorized": "Authentification incorrecte",
+      "unknown_error": "Erreur inconnue",
+      "validation_error": "Erreur de validation du champ"
+    },
+    "tryAgain": "Veuillez réessayer"
+  },
+  "ipr": {
+    "approval": {
+      "actions": {
+        "approve": "D'accord",
+        "cancel": "Annuler l'approbation",
+        "reject": "Pour le raffinement",
+        "resend": "Réconcilier"
+      },
+      "approved": "IPR accepté",
+      "attempt": "Tentative {index}",
+      "awaitingApproval": "En attente d'approbation",
+      "cancel": {
+        "description": "Vous ne pourrez pas rétablir votre statut de propriété intellectuelle après l'annulation.",
+        "no": "Non, j'ai changé d'avis",
+        "title": "Êtes-vous sûr d'annuler l'approbation ?",
+        "yes": "Oui, annuler"
+      },
+      "comment": "Commentaire",
+      "edit": {
+        "addApprover": "Ajouter un participant à l'approbation",
+        "addStage": "Ajouter une étape",
+        "approvers": "Participants à l'approbation",
+        "stageName": "Entrez le nom de la scène",
+        "stageTitle": "Nom de scène",
+        "title": "Modifier les étapes d'approbation"
+      },
+      "lessThanMinute": "moins d'une minute",
+      "onApprove": "À approuver {date}",
+      "reapprove": {
+        "description": "L'introduction de nouveaux objectifs nécessitera une révision du plan actuel.",
+        "title": "Il sera nécessaire de se mettre d'accord sur le plan"
+      },
+      "send": "Soumettre pour approbation",
+      "stages": "Étapes d'approbation",
+      "startApprovalButton": {
+        "approval": "Approbation ({approved}/{all})",
+        "approved": "D'accord",
+        "cancelled": "Approbation",
+        "not_approved": "Approbation",
+        "null": "D'accord"
+      },
+      "status": {
+        "approval": "Envoyé pour approbation",
+        "approved": "Envoyé pour approbation",
+        "cancelled": "Annulé",
+        "none": "En attente d'approbation",
+        "not_approved": "Envoyé pour approbation"
+      },
+      "voteStrategy": {
+        "first": "Le premier évaluateur approuvera",
+        "unanimous": "Tous les participants seront d'accord"
+      }
+    },
+    "targets": {
+      "comments": {
+        "placeholder": "Ecrire un commentaire",
+        "you": "Vous"
+      },
+      "delete": {
+        "description": "Vous ne pourrez pas récupérer la cible après la suppression.",
+        "descriptionApproved": "La suppression d'un objectif de l'EPI nécessitera la réapprobation de votre plan de développement individuel (DPI).",
+        "no": "Non, j'ai changé d'avis",
+        "title": "Est-il exact de supprimer la cible?",
+        "yes": "Oui, supprimer"
+      },
+      "emptyState": {
+        "active": {
+          "description": "Ajoutez des cibles pour développer vos compétences.",
+          "title": "Vous n'avez aucune cible"
+        },
+        "completed": {
+          "description": "Pour terminer un objectif, marquez-le avec le statut \"Terminé\" ou \"Annulé\".",
+          "title": "Vous n'avez pas encore d'objectifs terminés"
+        }
+      },
+      "materials": {
+        "paid": "Payé",
+        "reasons": {
+          "makeReason": "Justifier",
+          "placeholder": "Pourquoi est-il important pour vous d'étudier ce matériel ?",
+          "reasoned": "Justifié",
+          "title": "Raison d'être"
+        },
+        "requiredReason": "Pour les matériaux payants, une justification est requise.",
+        "skills": "Compétences couvertes",
+        "title": "Matériau"
+      },
+      "new": {
+        "add": "Ajouter cible",
+        "create": "Créer un objectif",
+        "general": {
+          "deadline": "Exécuter avant la date",
+          "description": {
+            "label": "Description",
+            "placeholder": "Ce qu'il faut faire pour atteindre l'objectif"
+          },
+          "name": {
+            "label": "Nom de la cible",
+            "placeholder": "Saisir le nom de la cible"
+          }
+        },
+        "materials": {
+          "new": "Ajouter du matériel",
+          "title": "Matériel d'étude"
+        },
+        "skills": {
+          "new": "Ajouter une compétence",
+          "title": "Compétences pour le développement"
+        },
+        "title": "Nouvelle cible"
+      },
+      "noPlan": {
+        "description": "Parlez-en à votre superviseur.",
+        "title": "Vous ne pouvez pas encore établir de plan de développement"
+      },
+      "outdated": "Dépassé",
+      "pageTitles": {
+        "deadline": "Date de fin",
+        "description": "Description",
+        "levels": "Niveaux de propriété",
+        "name": "Titre",
+        "priority": "Priorité",
+        "reason": "Justification",
+        "related": "S'applique à",
+        "skills": "Compétences couvertes",
+        "status": "Statut",
+        "title": "Cible"
+      },
+      "priority": {
+        "high": "Haute",
+        "low": "Basse",
+        "medium": "Moyenne"
+      },
+      "skills": {
+        "currentLevel": "Niveau actuel",
+        "requiredLevel": "Niveau requis",
+        "types": {
+          "competency": "Compétence",
+          "competency_cluster": "Pôle de compétences",
+          "skill": "Compétence"
+        }
+      },
+      "sortOptions": {
+        "created_at-asc": "Plus anciens first",
+        "created_at-desc": "Plus récents first",
+        "deadline": "Au plus prochain deadline",
+        "priority": "Au plus haut priorité"
+      },
+      "status": {
+        "cancelled": "Annulé",
+        "done": "Terminé",
+        "in_progress": "En cours",
+        "not_started": "Non commencé"
+      },
+      "statusGroups": {
+        "active": "Actif",
+        "completed": "Terminé"
+      },
+      "tabs": {
+        "comments": "Commentaires",
+        "general": "Informations générales",
+        "materials": "Matériaux",
+        "skills": "Compétences"
+      },
+      "till": "À {date}"
+    },
+    "title": "Plan de développement"
+  },
+  "navigation": {
+    "developmentPlan": "Plan de développement",
+    "employees": "Le personnel"
+  },
+  "success": {
+    "approvalStart": {
+      "title": "Le plan de développement a été envoyé pour approbation"
+    },
+    "passwordUpdated": {
+      "description": "Utilisez votre nouveau mot de passe pour vous connecter",
+      "title": "Le mot de passe a été mis à jour"
+    },
+    "targetCreated": {
+      "description": "Créez un nouvel objectif ou passez à l'accord sur un plan",
+      "title": "L'objectif a été créé avec succès"
+    },
+    "targetDeleted": {
+      "title": "L'objectif a été supprimé avec succès"
+    },
+    "targetEdited": {
+      "title": "L'objectif a été modifié avec succès"
+    }
+  },
+  "system": {
+    "cancel": "Annulation",
+    "continue": "Continuer",
+    "create": "Créez",
+    "delete": "supprimer",
+    "edit": "Modifier",
+    "emptySearch": "Aucun résultat n'a été trouvé pour votre recherche",
+    "notSelected": "Non sélectionné",
+    "percent": "{number}%",
+    "reset": "Remise à zéro",
+    "save": "Économiser",
+    "search": "Chercher",
+    "select": "Sélectionner",
+    "send": "Soumettre",
+    "showResults": "Afficher par : {number}"
+  }
+}
