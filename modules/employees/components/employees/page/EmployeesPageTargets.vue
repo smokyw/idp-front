@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import type {
-  EmployeesAccessRightsByEmployeeSuccessResponse,
   IdpIdpDetailsBriefView,
+  IdpIdpDetailsView,
   TargetsCollectionSort,
   TargetsFiltersStatusGroup,
 } from "@/Api"
 import type { Option } from "@/types/Utils"
 
 const { t } = useI18n()
+const localePath = useLocalePath()
 
 const props = defineProps<{
-  /** Права доступа */
-  accessRights: NonNullable<
-    EmployeesAccessRightsByEmployeeSuccessResponse["data"]
-  >["success"]
   /** `ID` сотрудника */
   employeeId: number
+  /** Информация об ИПР */
+  idp: IdpIdpDetailsView | undefined
   /** Выбранный ИПР */
   selectedIdp: IdpIdpDetailsBriefView
 }>()
@@ -96,12 +95,26 @@ const targets = ref(await getTargets())
 targetsCount!.value = targets.value.data.data?.success?.length ?? 0
 
 watch(
-  () => [selectedStatus.value, selectedSortOption.value, props.selectedIdp],
-  async () => {
-    targets.value = await getTargets()
-    targetsCount!.value = targets.value.data.data?.success?.length ?? 0
+  () => [
+    selectedStatus.value,
+    selectedSortOption.value,
+    props.selectedIdp,
+    useRoute().path,
+  ],
+  async (newValue, oldValue) => {
+    if (
+      useArrayDifference(newValue, oldValue).value.length &&
+      newValue[3].split("/")[1] === "employees" &&
+      newValue[3].split("/").length === 3
+    ) {
+      targets.value = await getTargets()
+      targetsCount!.value = targets.value.data.data?.success?.length ?? 0
+    }
   }
 )
+
+/** Открыт ли поп-ап подтверждения сброса согласования */
+const isPopupOpened = ref(false)
 </script>
 
 <template>
@@ -110,22 +123,27 @@ watch(
       <h2 class="h-[2.125rem] text-display-xs font-semibold">
         {{ t("employees.page.targets") }}
       </h2>
-      <LazyNuxtLinkLocale
-        v-if="
-          accessRights?.['app.targets.create_target'] === 'granted' &&
-          selectedStatus === 'active'
-        "
+      <button
+        v-if="selectedStatus === 'active'"
         class="button sm"
         :class="[targets.data.data?.success?.length ? 'outlined' : 'primary']"
-        :to="{
-          path: `/employees/${employeeId}/targets/new`,
-          query: {
-            idpId: selectedIdp?.id,
-          },
-        }"
+        data-test-id="selectedIdp"
+        @click="
+          idp?.last_attempt_status === 'approved'
+            ? (isPopupOpened = true)
+            : navigateTo(
+                localePath({
+                  path: `/employees/${employeeId}/targets/new`,
+                  query: {
+                    idpId: selectedIdp?.id,
+                    year: useRoute().query.year,
+                  },
+                })
+              )
+        "
       >
         {{ t("ipr.targets.new.title") }}
-      </LazyNuxtLinkLocale>
+      </button>
     </div>
     <div
       class="-mb-4 flex items-center gap-x-1 border-b border-neutral-100 px-4 pb-4"
@@ -169,5 +187,38 @@ watch(
         </p>
       </div>
     </div>
+    <LazyVPopup
+      v-if="isPopupOpened"
+      is-small
+      :title="t('ipr.approval.reapprove.title')"
+      @click-outside="isPopupOpened = false"
+    >
+      <p class="text-md text-neutral">
+        {{ t("ipr.approval.reapprove.description") }}
+      </p>
+      <template #footerButtons>
+        <button
+          class="button md outlined"
+          data-test-id="isPopupOpened"
+          @click="isPopupOpened = false"
+        >
+          {{ t("system.cancel") }}
+        </button>
+        <LazyNuxtLinkLocale
+          class="button md primary"
+          data-test-id="isPopupOpened"
+          :to="{
+            path: `/employees/${employeeId}/targets/new`,
+            query: {
+              idpId: selectedIdp?.id,
+              year: useRoute().query.year,
+            },
+          }"
+          @click="isPopupOpened = false"
+        >
+          {{ t("system.continue") }}
+        </LazyNuxtLinkLocale>
+      </template>
+    </LazyVPopup>
   </div>
 </template>

@@ -36,7 +36,7 @@ withDefaults(
 )
 
 /** Значение инпута */
-const modelValue = defineModel<string>({ default: "", local: true })
+const modelValue = defineModel<string>({ default: "" })
 </script>
 
 <template>

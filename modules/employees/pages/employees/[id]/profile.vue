@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+definePageMeta({
+  middleware: "employees",
+})
+</script>
 
 <template>
   <div>Профиль сотрудника</div>

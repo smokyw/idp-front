@@ -40,12 +40,9 @@ const statusStyles = {
  */
 async function downloadFile() {
   /** Скаченный файл */
-  const file = await useApi().files.filesDownloadOne(
-    props.task.file_id!.toString(),
-    {
-      headers: useAuth().generateHeaders(),
-    }
-  )
+  const file = await useApi().files.filesDownloadOne(props.task.file_id!, {
+    headers: useAuth().generateHeaders(),
+  })
 
   /** Хедер `Content-Disposition` */
   const contentDisposition = file.headers.get("content-disposition")

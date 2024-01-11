@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { IdpRoute } from "@/Api"
-import type { ConvertedStage } from "@/modules/ipr/composables/useStageConverter"
-import type { MoveEvent } from "sortablejs"
-import { VueDraggableNext } from "vue-draggable-next"
+import type { IdpRoute } from "@/Api";
+import type { ConvertedStage } from "@/modules/ipr/composables/useStageConverter";
+import type { MoveEvent } from "sortablejs";
+import { VueDraggableNext } from "vue-draggable-next";
 
 const props = defineProps<{
   /** Маршрут по умолчанию */
@@ -25,7 +25,6 @@ const stageInDefaultRoute = computed(() => {
 })
 
 const modelValue = defineModel<typeof props.stage>({
-  local: true,
   required: true,
 })
 modelValue.value = toRefs(props).stage.value
@@ -135,6 +134,7 @@ const defaultApprovers = await useApi().idp.idpSearchForApprovers(
               </div>
               <LazyApprovalEditStageApprover
                 v-model="modelValue.approver_ids[index]"
+                :additional-approvers="stage.approvers"
                 :approver-ids="modelValue.approver_ids"
                 data-test-id="modelValue.approver_ids.index"
                 :disabled="isApproverDisabled(approver)"

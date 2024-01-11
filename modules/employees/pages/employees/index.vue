@@ -12,6 +12,7 @@ useSeoMeta({
 
 definePageMeta({
   layout: "no-sidebar",
+  middleware: "employees",
 })
 
 // Экспозим параметры для layout

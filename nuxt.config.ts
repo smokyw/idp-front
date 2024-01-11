@@ -82,6 +82,11 @@ export default defineNuxtConfig({
       scrollBehaviorType: "smooth",
     },
   },
+  runtimeConfig: {
+    public: {
+      apiBase: "https://api.ipr-stand.e-queo.xyz",
+    },
+  },
   ssr: false,
   svgo: {
     defaultImport: "component",

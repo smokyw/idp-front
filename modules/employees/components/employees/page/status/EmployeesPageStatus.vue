@@ -2,8 +2,6 @@
 import type { IdpIdpDetailsView } from "@/Api"
 
 const props = defineProps<{
-  /** Может ли текущий пользователь удалить ИПР */
-  canDeleteIdp: boolean
   /** Информация об ИПР */
   idp: IdpIdpDetailsView | undefined
 }>()
@@ -188,7 +186,8 @@ provide("selectedEmployees", selectedEmployees)
             }
           "
         />
-        <EmployeesPageStatusButton
+        <LazyEmployeesPageStatusButton
+          v-if="useUserStore().checkRight('app.idp.generate_reports')"
           data-test-id="isReportsPopupOpened"
           icon="SvgoFileDownload"
           :title="t('employees.page.statusButtons.generateReport')"
@@ -196,7 +195,7 @@ provide("selectedEmployees", selectedEmployees)
         />
       </div>
       <LazyEmployeesPageStatusButton
-        v-if="canDeleteIdp"
+        v-if="useUserStore().checkRight('app.idp.delete_idp')"
         data-test-id="emit"
         icon="SvgoTrash"
         :title="t('employees.page.statusButtons.deleteIpr')"

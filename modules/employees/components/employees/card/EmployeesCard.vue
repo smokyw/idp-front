@@ -33,7 +33,7 @@ const selectedEmployees = inject<Ref<Set<number>>>("selectedEmployees")
   <div
     class="flex flex-col gap-y-2 rounded-2xl bg-white p-4 sm:flex-row sm:items-center sm:justify-between lg:grid lg:h-[3.25rem] lg:grid-cols-[3.25rem_5rem_20.25rem_13.25rem_8.5rem_9rem_7rem] lg:rounded-none lg:bg-transparent lg:p-0"
   >
-    <div class="flex items-center justify-center">
+    <div class="hidden items-center justify-center lg:flex">
       <input
         v-model="selectedEmployees"
         data-test-id="selectedEmployees"

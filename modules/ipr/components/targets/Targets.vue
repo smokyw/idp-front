@@ -193,7 +193,7 @@ const isPopupOpened = ref(false)
     </div>
     <template
       v-if="
-        useUserStore().checkRight('app.targets.create_own_target') &&
+        useUserStore().checkRight('app.targets.create_target') &&
         selectedStatus === 'active' &&
         targets?.data.data?.success?.length
       "
@@ -242,7 +242,7 @@ const isPopupOpened = ref(false)
     </div>
     <LazyNuxtLinkLocale
       v-if="
-        useUserStore().checkRight('app.targets.create_own_target') &&
+        useUserStore().checkRight('app.targets.create_target') &&
         selectedStatus === 'active' &&
         targets?.data.data?.success?.length
       "
@@ -275,7 +275,12 @@ const isPopupOpened = ref(false)
     />
     <LazyNuxtPage v-if="idp" :idp="idp?.data.data?.success" />
   </template>
-  <LazyTargetsNoPlan v-else />
+  <LazyTargetsNoPlan
+    v-else
+    :description="t('ipr.targets.noPlan.description')"
+    show-background
+    :title="t('ipr.targets.noPlan.title')"
+  />
   <LazyVPopup
     v-if="isPopupOpened"
     is-small

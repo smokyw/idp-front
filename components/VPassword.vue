@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { nanoid } from "nanoid"
+
 withDefaults(
   defineProps<{
     /**
@@ -23,6 +25,8 @@ withDefaults(
      * @defaultValue `true`
      */
     required?: boolean
+    /** Есть ли кнопка «Сгенерировать пароль» */
+    showGenerate?: boolean
   }>(),
   {
     id: "password",
@@ -30,8 +34,10 @@ withDefaults(
   }
 )
 
+const { t } = useI18n()
+
 /** Значение инпута */
-const modelValue = defineModel<string>({ local: true })
+const modelValue = defineModel<string>()
 
 /** Показан ли пароль */
 const isPasswordShown = ref(false)
@@ -61,5 +67,15 @@ const isPasswordShown = ref(false)
       </div>
     </div>
     <span v-if="hint" class="-mb-1 text-sm text-neutral">{{ hint }}</span>
+    <template v-if="showGenerate" #label>
+      <button
+        class="button text-sm"
+        data-test-id="modelValue"
+        @click="modelValue = nanoid(14)"
+      >
+        <LazyIcon class="fill-primary" name="SvgoRefresh" size="16" />
+        <span class="text-primary">{{ t("system.generate") }}</span>
+      </button>
+    </template>
   </VField>
 </template>

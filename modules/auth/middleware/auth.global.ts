@@ -18,7 +18,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
      *
      * Страницы называются по примеру `login___ru` или `login-reset-password___ru`.
      */
-    const pathName = path.name.split("___")[0]
+    const pathName = path?.name?.split("___")[0]
 
     /**
      * Группа страниц.
@@ -27,7 +27,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
      *
      * @example Например, в `login-reset-password` берется префикс `login`.
      */
-    const pathGroup = pathName.split("-")[0]
+    const pathGroup = pathName?.split("-")[0]
 
     return pathGroup
   }
@@ -42,6 +42,19 @@ export default defineNuxtRouteMiddleware(async (to) => {
     // Если пользователь пытается перейти на страницу авторизации
     if (getPathName(to) === "login") {
       return navigateTo(localePath("/"))
+    } else {
+      const userStore = useUserStore()
+
+      if (!userStore.user) {
+        const user = await useApi().users.usersGetProfile({
+          headers: useAuth().generateHeaders(),
+        })
+
+        // Выставляем пользователя
+        userStore.user = user.data.data?.success
+        // Выставляем права доступа пользователя
+        userStore.accessRights = user.data.data?.success?.access_rights
+      }
     }
   } else if (refreshToken.value) {
     // Если нет `access`-токена (истек по времени), но есть `refresh`-токен

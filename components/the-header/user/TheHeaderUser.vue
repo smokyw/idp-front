@@ -6,17 +6,8 @@ defineProps<{
 
 const { logOut } = useAuth()
 
-const user = await useApi().users.usersGetProfile({
-  headers: useAuth().generateHeaders(),
-})
-const userDisplay = useUserDisplay(user.data.data?.success)
-
 const userStore = useUserStore()
-
-// Выставляем пользователя
-userStore.user = user.data.data?.success
-// Выставляем права доступа пользователя
-userStore.accessRights = user.data.data?.success?.access_rights
+const userDisplay = useUserDisplay(userStore.user)
 
 /** Открыто ли меню уведомлений */
 const isNotificationsOpened = ref(false)
@@ -94,7 +85,7 @@ const buttons = [
               {{ userDisplay.getFullName() }}
             </p>
             <p class="text-xs text-neutral-400">
-              {{ user.data.data?.success?.email }}
+              {{ userStore.user?.email }}
             </p>
           </div>
         </div>

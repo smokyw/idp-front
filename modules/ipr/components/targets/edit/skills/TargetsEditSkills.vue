@@ -88,7 +88,12 @@ async function updateDebounceSelectedSkills() {
           v-for="skill in debouncedSelectedSkills"
           :key="skill"
           :skill-id="skill"
-          @delete-skill="debouncedSelectedSkills?.delete(skill)"
+          @delete-skill="
+            () => {
+              selectedSkills?.delete(skill)
+              updateDebounceSelectedSkills()
+            }
+          "
         />
       </div>
     </div>

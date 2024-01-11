@@ -4,18 +4,19 @@ import type { NavigationLink } from "@/types/Utils"
 const { t } = useI18n()
 
 /** Список страниц в навигации */
-const navigation: NavigationLink[] = [
+const navigation = [
   {
     icon: "SvgoArrowCircleBrokenUpRightOutline",
     title: t("navigation.developmentPlan"),
     url: "/",
   },
   {
+    accessRight: "app.employees.access_to_employees",
     icon: "SvgoUsers",
     title: t("navigation.employees"),
     url: "/employees",
   },
-]
+] as const satisfies NavigationLink[]
 </script>
 
 <template>

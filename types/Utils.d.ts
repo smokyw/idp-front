@@ -1,4 +1,10 @@
+import type { UsersUserAttributeAccessRights } from "@/Api"
+
 export interface NavigationLink {
+  /** Связанное право доступа */
+  accessRight?: keyof NonNullable<
+    UsersUserAttributeAccessRights["access_rights"]
+  >
   /** Название иконки */
   icon: string
   /** Заголовок ссылки */

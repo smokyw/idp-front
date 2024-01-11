@@ -2,6 +2,8 @@
 import type { DivisionsTreeItemBase } from "@/Api"
 
 defineProps<{
+  /** Открыты ли элементы по умолчанию */
+  defaultOpen?: boolean
   /** Глубина вложенности */
   depth: number
   /** Подразделение организационной структуры */
@@ -80,7 +82,7 @@ function isSomeChildrenSelected(division: DivisionsTreeItemBase): boolean {
 </script>
 
 <template>
-  <HeadlessDisclosure>
+  <HeadlessDisclosure :default-open="defaultOpen">
     <div class="flex items-center gap-x-2.5 px-2 py-3">
       <HeadlessDisclosureButton :style="{ paddingLeft: depth * 1.625 + 'rem' }">
         <Icon
@@ -114,6 +116,7 @@ function isSomeChildrenSelected(division: DivisionsTreeItemBase): boolean {
       <LazyEmployeesFiltersDivisionsCard
         v-for="childDivision in division.children"
         :key="childDivision.id"
+        :default-open="defaultOpen"
         :depth="depth + 1"
         :division="childDivision"
         :search-query="searchQuery"

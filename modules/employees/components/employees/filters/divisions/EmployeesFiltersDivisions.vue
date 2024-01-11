@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { deepEqual } from "fast-equals"
+
 const props = defineProps<{
   /** Выбранные подразделение от родительского компонента */
   parentSelectedDivisions: number[]
@@ -65,7 +67,7 @@ provide("selectedDivisions", selectedDivisions)
   <VPopup
     is-full-screen
     :title="t('employees.filters.divisions.title')"
-    window-classes="lg:w-[960px]"
+    window-classes="lg:!w-[960px]"
     @click-outside="emit('close')"
   >
     <div
@@ -83,13 +85,25 @@ provide("selectedDivisions", selectedDivisions)
         <LazyIcon class="text-neutral-200" name="svg-spinners:270-ring" />
       </div>
       <template v-else-if="divisions.data.data?.success?.length">
-        <LazyEmployeesFiltersDivisionsCard
-          v-for="division in divisions.data.data?.success"
-          :key="division.id"
-          :depth="0"
-          :division="division"
-          :search-query="debouncedSearch"
-        />
+        <template v-if="debouncedSearch.length >= 3">
+          <LazyEmployeesFiltersDivisionsCard
+            v-for="division in divisions.data.data?.success"
+            :key="division.id"
+            default-open
+            :depth="0"
+            :division="division"
+            :search-query="debouncedSearch"
+          />
+        </template>
+        <template v-else>
+          <LazyEmployeesFiltersDivisionsCard
+            v-for="division in divisions.data.data?.success"
+            :key="division.id"
+            :depth="0"
+            :division="division"
+            :search-query="debouncedSearch"
+          />
+        </template>
       </template>
       <div
         v-else
@@ -105,7 +119,6 @@ provide("selectedDivisions", selectedDivisions)
         @click="
           () => {
             selectedDivisions.clear()
-            emit('selectDivisions', Array.from(selectedDivisions))
           }
         "
       >
@@ -114,7 +127,9 @@ provide("selectedDivisions", selectedDivisions)
       <button
         class="button md primary"
         data-test-id="sendActionRequest"
-        :disabled="!selectedDivisions.size"
+        :disabled="
+          deepEqual(Array.from(selectedDivisions), parentSelectedDivisions)
+        "
         @click="emit('selectDivisions', Array.from(selectedDivisions))"
       >
         {{

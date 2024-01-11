@@ -63,11 +63,15 @@ const isDeletePopupOpened = ref(false)
       class="absolute right-0 mt-1 flex w-max flex-col divide-y divide-neutral-100 overflow-hidden rounded-lg bg-white shadow-lg outline-none lg:left-0"
     >
       <HeadlessMenuItem
-        v-if="userStore.checkRight('app.targets.update_own_target')"
+        v-if="userStore.checkRight('app.targets.update_target')"
         :as="NuxtLinkLocale"
         class="px-4 py-2.5 text-left font-regular text-neutral-900 ui-active:bg-neutral-50"
         :to="{
-          path: `/targets/edit/${id}`,
+          path:
+            ((employeeId && '/employees/' + employeeId) ?? '') +
+            '/targets/edit' +
+            (employeeId ? '-' : '/') +
+            id,
           query: {
             idpId: idp.id,
           },
@@ -76,7 +80,7 @@ const isDeletePopupOpened = ref(false)
         {{ t("system.edit") }}
       </HeadlessMenuItem>
       <HeadlessMenuItem
-        v-if="userStore.checkRight('app.targets.delete_own_target')"
+        v-if="userStore.checkRight('app.targets.delete_target')"
         as="button"
         class="px-4 py-2.5 text-left ui-active:bg-neutral-50"
         data-test-id="isDeletePopupOpened"

@@ -1,8 +1,14 @@
-import type { IdpApprovalStage, IdpApprover, IdpRouteStage } from "@/Api"
+import type {
+  IdpApprovalStage,
+  IdpApprover,
+  IdpRouteStage,
+  IdpRouteUser,
+} from "@/Api"
 
 /** Конвертированный этап */
 export type ConvertedStage = {
   approver_ids: string[]
+  approvers?: IdpRouteUser[] & IdpApprover[]
   isEditable?: boolean | undefined
   name: string | undefined
   notEditableApproverIds?: string[]
@@ -22,6 +28,7 @@ export default function (
   return stages.map((stage) => {
     return {
       approver_ids: stage.approvers?.map((approver) => approver.id!) ?? [],
+      approvers: stage.approvers,
       id: stage.id,
       isEditable: stage.is_editable,
       name: stage.name,

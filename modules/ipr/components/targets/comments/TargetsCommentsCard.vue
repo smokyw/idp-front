@@ -26,7 +26,7 @@ const cardDate = parseDate(toRefs(props).comment.value.created_at ?? "")
           <span v-else>
             {{
               `${useUserDisplay(comment.author).getFullName()}, ${
-                comment.author?.role
+                comment.author?.role?.name
               }`
             }}
           </span>

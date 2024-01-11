@@ -88,7 +88,7 @@ function submitForm(event: Event) {
       <div
         class="flex h-14 w-14 items-center justify-center rounded-full bg-success"
       >
-        <SvgoCheck class="h-7 w-7" />
+        <SvgoCheck class="h-7 w-7 fill-white" />
       </div>
       <!-- eslint-disable-next-line vue/no-v-html @intlify/vue-i18n/no-v-html -->
       <p v-html="t('auth.feedback.answer', { email: sentMessageEmail })" />

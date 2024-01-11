@@ -2,6 +2,7 @@
 import type { IdpIdpDetailsView } from "@/Api"
 
 definePageMeta({
+  middleware: "employees",
   scrollToTop: false,
 })
 

@@ -222,6 +222,137 @@ export interface BaseConfigurationResponse {
   }
 }
 
+export interface AccessRightAccessToAdminPanel {
+  /**
+   * Доступ к админ панели
+   * @example "granted"
+   */
+  "app.admin.access_to_admin_panel"?: "granted" | "denied"
+}
+
+export interface AccessRightAccessToEmployees {
+  /**
+   * Доступ к разделу 'Сотрудники'
+   * @example "granted"
+   */
+  "app.employees.access_to_employees"?: "granted" | "denied"
+}
+
+export interface AccessRightCreateTarget {
+  /**
+   * Создание цели
+   * @example "granted"
+   */
+  "app.targets.create_target"?: "granted" | "denied"
+}
+
+export interface AccessRightUpdateTarget {
+  /**
+   * Обновление цели
+   * @example "granted"
+   */
+  "app.targets.update_target"?: "granted" | "denied"
+}
+
+export interface AccessRightDeleteTarget {
+  /**
+   * Удаление цели
+   * @example "granted"
+   */
+  "app.targets.delete_target"?: "granted" | "denied"
+}
+
+export interface AccessRightCommentTarget {
+  /**
+   * Комментирование цели
+   * @example "granted"
+   */
+  "app.targets.comment_target"?: "granted" | "denied"
+}
+
+export interface AccessRightCreateIdp {
+  /**
+   * Создать ИПР
+   * @example "granted"
+   */
+  "app.idp.create_idp"?: "granted" | "denied"
+}
+
+export interface AccessRightDeleteIdp {
+  /**
+   * Удалить ИПР
+   * @example "granted"
+   */
+  "app.idp.delete_idp"?: "granted" | "denied"
+}
+
+export interface AccessRightGenerateReports {
+  /**
+   * Формирование отчётов
+   * @example "granted"
+   */
+  "app.idp.generate_reports"?: "granted" | "denied"
+}
+
+export interface AccessRightStartApproval {
+  /**
+   * Запуск процесса согласования
+   * @example "granted"
+   */
+  "app.idp.start_approval"?: "granted" | "denied"
+}
+
+export interface AccessRightCancelApproval {
+  /**
+   * Отменить процесс согласования
+   * @example "granted"
+   */
+  "app.idp.cancel_approval"?: "granted" | "denied"
+}
+
+export interface AccessRightApproveStage {
+  /**
+   * Согласовать
+   * @example "granted"
+   */
+  "app.idp.approve_stage"?: "granted" | "denied"
+}
+
+export interface AccessRightRejectStage {
+  /**
+   * Отправить на доработку
+   * @example "granted"
+   */
+  "app.idp.reject_stage"?: "granted" | "denied"
+}
+
+export interface AccessRightUpdateRoute {
+  /**
+   * Редактиовать маршурт
+   * @example "granted"
+   */
+  "app.idp.update_route"?: "granted" | "denied"
+}
+
+export interface RolesRoleAttributeId {
+  /**
+   * ID роли
+   * @example 56
+   */
+  id?: number
+}
+
+export interface RolesRoleAttributeName {
+  /**
+   * Название роли
+   * @example "Сотрудник"
+   */
+  name?: string
+}
+
+/** Роль */
+export type RolesRoleDefaultView = RolesRoleAttributeId & RolesRoleAttributeName
+
 export interface AuthLoginRequest {
   /**
    * Логин
@@ -395,38 +526,6 @@ export interface FeedbackNewTicketRequest {
   text: string
 }
 
-export interface UsersAccessRightsCreateOwnTarget {
-  /**
-   * Право на создание собственной цели
-   * @example "granted"
-   */
-  "app.targets.create_own_target"?: "granted" | "denied"
-}
-
-export interface UsersAccessRightsUpdateOwnTarget {
-  /**
-   * Право на редактирование собственной цели
-   * @example "granted"
-   */
-  "app.targets.update_own_target"?: "granted" | "denied"
-}
-
-export interface UsersAccessRightsDeleteOwnTarget {
-  /**
-   * Право на удаление собственной цели
-   * @example "granted"
-   */
-  "app.targets.delete_own_target"?: "granted" | "denied"
-}
-
-export interface UsersAccessRightsLeaveCommentsOnOwnTarget {
-  /**
-   * Право на оставление комментариев к собственной цели
-   * @example "granted"
-   */
-  "app.targets.leave_comments_on_own_target"?: "granted" | "denied"
-}
-
 export interface UsersUserAttributeID {
   /**
    * ID
@@ -484,18 +583,15 @@ export interface UsersUserAttributeFullName {
 }
 
 export interface UsersUserAttributeAccessRights {
-  access_rights?: UsersAccessRightsCreateOwnTarget &
-    UsersAccessRightsUpdateOwnTarget &
-    UsersAccessRightsDeleteOwnTarget &
-    UsersAccessRightsLeaveCommentsOnOwnTarget
-}
-
-export interface UsersUserAttributeRole {
-  /**
-   * Роль
-   * @example "employee"
-   */
-  role?: string
+  access_rights?: AccessRightAccessToAdminPanel &
+    AccessRightAccessToEmployees &
+    AccessRightCreateTarget &
+    AccessRightUpdateTarget &
+    AccessRightDeleteTarget &
+    AccessRightCommentTarget &
+    AccessRightCreateIdp &
+    AccessRightDeleteIdp &
+    AccessRightGenerateReports
 }
 
 export interface UsersUserAttributeCreatedAt {
@@ -504,6 +600,14 @@ export interface UsersUserAttributeCreatedAt {
    * @example "2023-09-01 12:10:20 +03:00"
    */
   created_at?: string
+}
+
+export interface UsersUserAttributeSource {
+  /**
+   * Источник данных
+   * @example "idp"
+   */
+  source?: string
 }
 
 export interface UsersProfileSuccessResponse {
@@ -586,7 +690,9 @@ export interface EmployeesCollectionSuccessResponse {
                   })
               | null
           }
-        divisions?: DivisionsDivisionBriefView[]
+        divisions?: DivisionsDivisionDefaultView[]
+        /** Текущая должность. NULL, если отсутствует. */
+        position?: PositionsPositionDefaultView
       })[]
   }
   meta?: {
@@ -618,16 +724,8 @@ export interface EmployeesEmployeeBriefDetailsSuccessResponse {
       EmployeesEmployeeAttributeLastName & {
         idps?: IdpIdpDetailsBriefView[]
         /** Краткая информация о текущей должности. NULL, если дожность у сотрудника отсутствует. */
-        position?:
-          | (PositionsItemAttributeId & PositionsItemAttributeName & PositionsItemAttributePercentOfSuitability)
-          | null
+        position?: (PositionsPositionDefaultView & PositionsItemAttributePercentOfSuitability) | null
       }
-  }
-}
-
-export interface EmployeesAccessRightsByEmployeeSuccessResponse {
-  data?: {
-    success?: IdpAccessRightsCreateIdp & IdpAccessRightsDeleteIdp & TargetsAccessRightsCreateTarget
   }
 }
 
@@ -654,6 +752,9 @@ export interface PositionsItemAttributePercentOfSuitability {
    */
   percent_of_suitability?: number
 }
+
+/** Текущая должность. NULL, если отсутствует. */
+export type PositionsPositionDefaultView = (PositionsItemAttributeId & PositionsItemAttributeName) | null
 
 export interface SkillsLevelIndicator {
   /**
@@ -824,14 +925,6 @@ export interface SkillsTreeSuccessResponse {
   data?: {
     success?: (SkillsTreeItemCompetencyCluster | SkillsTreeItemCompetency | SkillsTreeItemSkill)[]
   }
-}
-
-export interface TargetsAccessRightsCreateTarget {
-  /**
-   * Создание цели
-   * @example "granted"
-   */
-  "app.targets.create_target"?: "granted" | "denied"
 }
 
 export interface TargetsMaterialToAdd {
@@ -1348,79 +1441,22 @@ export interface IdpGetIdpDetailsSuccessResponse {
   }
 }
 
-export interface IdpAccessRightsCreateIdp {
-  /**
-   * Создание ИПР
-   * @example "granted"
-   */
-  "app.idp.create_idp"?: "granted" | "denied"
-}
-
-export interface IdpAccessRightsDeleteIdp {
-  /**
-   * Удаление ИПР
-   * @example "granted"
-   */
-  "app.idp.delete_idp"?: "granted" | "denied"
-}
-
-export interface IdpAccessRightsStartApproval {
-  /**
-   * Запуск процесса согласования
-   * @example "granted"
-   */
-  "app.idp.start_approval"?: "granted" | "denied"
-}
-
-export interface IdpAccessRightsCancelApproval {
-  /**
-   * Отменить процесс согласования
-   * @example "granted"
-   */
-  "app.idp.cancel_approval"?: "granted" | "denied"
-}
-
-export interface IdpAccessRightsApproveStage {
-  /**
-   * Согласовать
-   * @example "granted"
-   */
-  "app.idp.approve_stage"?: "granted" | "denied"
-}
-
-export interface IdpAccessRightsRejectStage {
-  /**
-   * Отправить на доработку
-   * @example "granted"
-   */
-  "app.idp.reject_stage"?: "granted" | "denied"
-}
-
-export interface IdpAccessRightsUpdateRoute {
-  /**
-   * Редактиовать маршурт
-   * @example "granted"
-   */
-  "app.idp.update_route"?: "granted" | "denied"
-}
-
 export interface IdpGetIdpAccessRightsSuccessResponse {
   data?: {
-    success?: UtilRequiredKeys<IdpAccessRightsDeleteIdp, "app.idp.delete_idp"> &
-      UtilRequiredKeys<IdpAccessRightsStartApproval, "app.idp.start_approval"> &
-      IdpAccessRightsCancelApproval &
-      IdpAccessRightsApproveStage &
-      IdpAccessRightsRejectStage &
-      IdpAccessRightsUpdateRoute
+    success?: UtilRequiredKeys<AccessRightStartApproval, "app.idp.start_approval"> &
+      AccessRightCancelApproval &
+      AccessRightApproveStage &
+      AccessRightRejectStage &
+      AccessRightUpdateRoute
   }
 }
 
 export interface IdpGetAttemptAccessRightsSuccessResponse {
   data?: {
-    success?: UtilRequiredKeys<IdpAccessRightsCancelApproval, "app.idp.cancel_approval"> &
-      UtilRequiredKeys<IdpAccessRightsApproveStage, "app.idp.approve_stage"> &
-      UtilRequiredKeys<IdpAccessRightsRejectStage, "app.idp.reject_stage"> &
-      UtilRequiredKeys<IdpAccessRightsUpdateRoute, "app.idp.update_route">
+    success?: UtilRequiredKeys<AccessRightCancelApproval, "app.idp.cancel_approval"> &
+      UtilRequiredKeys<AccessRightApproveStage, "app.idp.approve_stage"> &
+      UtilRequiredKeys<AccessRightRejectStage, "app.idp.reject_stage"> &
+      UtilRequiredKeys<AccessRightUpdateRoute, "app.idp.update_route">
   }
 }
 
@@ -1677,7 +1713,12 @@ export interface CommentsCommentAttributeCreatedAt {
 }
 
 export interface CommentsCommentAttributeAuthor {
-  author?: UsersUserAttributeID & UsersUserAttributeRole & UsersUserAttributeFirstName & UsersUserAttributeLastName
+  author?: UsersUserAttributeID &
+    UsersUserAttributeFirstName &
+    UsersUserAttributeLastName & {
+      /** Роль */
+      role?: RolesRoleDefaultView
+    }
 }
 
 export interface CommentsCommentAttributeText {
@@ -1793,7 +1834,7 @@ export interface DivisionsTreeSuccessResponse {
   }
 }
 
-export interface DivisionsDivisionBriefView {
+export interface DivisionsDivisionDefaultView {
   /**
    * ID
    * @example 512
@@ -1922,6 +1963,396 @@ export interface NotificationsSaveConfigRequest {
   config?: (NotificationsConfigAttributeType & NotificationsConfigAttributeSelectedMode)[]
 }
 
+export interface AdminPanelRolesGetCollectionSuccessResponse {
+  data?: {
+    success?: RolesRoleDefaultView[]
+  }
+}
+
+export interface AdminPanelUserSourcesGetCollectionSuccessResponse {
+  data?: {
+    success?: ("equeo" | "idp" | "other")[]
+  }
+}
+
+export interface AdminPanelUsersUserDetailsAttributeAccountId {
+  /**
+   * ID пользователя (аккаунта)
+   * @example "user_001"
+   */
+  id?: string
+}
+
+export interface AdminPanelUsersUserDetailsAttributeAccountLogin {
+  /**
+   * Логин пользователя (аккаунта)
+   * @example "user_001"
+   */
+  login?: string
+}
+
+export interface AdminPanelUsersUserDetailsAttributeAccountPassword {
+  /**
+   * Пароль пользователя (аккаунта)
+   * @example "qwerty123"
+   */
+  password?: string
+}
+
+export interface AdminPanelUsersUserDetailsAttributeAccountCreatedAt {
+  /**
+   * Дата создания пользователя (аккаунта)
+   * @example "2023-09-01 12:10:20 +03:00"
+   */
+  created_at?: string
+}
+
+export interface AdminPanelUsersUserDetailsAttributeAccountUpdatedAt {
+  /**
+   * Дата обновления пользователя (аккаунта)
+   * @example "2023-09-01 12:10:20 +03:00"
+   */
+  updated_at?: string
+}
+
+export interface AdminPanelUsersUserDetailsAttributeAccountFirstName {
+  /**
+   * Имя пользователя (аккаунта)
+   * @example "Иван"
+   */
+  first_name?: string
+}
+
+export interface AdminPanelUsersUserDetailsAttributeAccountLastName {
+  /**
+   * Фамилия пользователя (аккаунта)
+   * @example "Иванов"
+   */
+  last_name?: string
+}
+
+export interface AdminPanelUsersUserDetailsAttributeAccountEmail {
+  /**
+   * Email пользователя (аккаунта)
+   * @example "ivanov.ivan@test.com"
+   */
+  email?: string
+}
+
+export interface AdminPanelUsersUserDetailsAttributeEmployeeId {
+  /**
+   * ID сотрудника
+   * @example 128
+   */
+  id?: number
+}
+
+export interface AdminPanelUsersUserDetailsAttributeEmployeeFirstName {
+  /**
+   * Имя сотрудника
+   * @example "Иван"
+   */
+  first_name?: string
+}
+
+export interface AdminPanelUsersUserDetailsAttributeEmployeeMiddleName {
+  /**
+   * Отчество сотрудника
+   * @example "Иванович"
+   */
+  middle_name?: string
+}
+
+export interface AdminPanelUsersUserDetailsAttributeEmployeeLastName {
+  /**
+   * Фамилия сотрудника
+   * @example "Иванов"
+   */
+  last_name?: string
+}
+
+export interface AdminPanelUsersUserDetailsAttributeEmployeeEmail {
+  /**
+   * Email сотрудника
+   * @example "ivan.ivanov@test.com"
+   */
+  email?: string
+}
+
+export interface AdminPanelUsersUserDetailsAttributeEmployeePhone {
+  /**
+   * Номер телефона сотрудника
+   * @example "+71234567890"
+   */
+  phone?: string
+}
+
+export interface AdminPanelUsersUserDetailsAttributeRole {
+  /** Роль */
+  role?: RolesRoleDefaultView
+}
+
+export interface AdminPanelUsersUserDetailsAttributePosition {
+  /** Текущая должность. NULL, если отсутствует. */
+  position?: PositionsPositionDefaultView
+}
+
+export interface AdminPanelUsersUserDetailsAttributeDivision {
+  division?: DivisionsDivisionDefaultView
+}
+
+export interface AdminPanelUsersUserDetailsAttributeChiefs {
+  /** Список руководителей */
+  chiefs?: {
+    /**
+     * ID руководителя
+     * @example "user_010"
+     */
+    id?: string
+    /**
+     * Имя руководителя
+     * @example "Константин"
+     */
+    first_name?: string
+    /**
+     * Фамилия руководителя
+     * @example "Константинопольский"
+     */
+    last_name?: string
+  }[]
+}
+
+export interface AdminPanelUsersUserDetailsAttributeDivisionAccess {
+  /** Элементы орг. структуры, к которым есть доступ */
+  division_access?: {
+    /**
+     * ID элемента орг. структуры
+     * @example 64
+     */
+    id?: number
+    /**
+     * Название элемента орг. структуры
+     * @example "Подразделение № 345"
+     */
+    name?: string
+  }[]
+}
+
+export interface AdminPanelUsersUserDetailsAttributeIndividualAccess {
+  /** Сотрудники, к которым есть доступ в индивидуальном порядке */
+  individual_access?: {
+    /**
+     * ID сотрудника
+     * @example 64
+     */
+    id?: number
+    /**
+     * Имя сотрудника
+     * @example "Константин"
+     */
+    first_name?: string
+    /**
+     * Фамилия сотрудника
+     * @example "Константинопольский"
+     */
+    last_name?: string
+  }[]
+}
+
+export type AdminPanelUsersCollectionSort = BaseSort & {
+  /**
+   * Значение, по которому производится сортировка. Если не указано, то будет использовано значение по умолчанию.
+   * @example "created_at"
+   */
+  attribute?: "created_at" | "id"
+}
+
+export interface AdminPanelUsersCollectionFilter {
+  /**
+   * Искать в архиве
+   * @example false
+   */
+  archive?: boolean | null
+  /**
+   * ID пользователя (аккаунта)
+   * @example "user_001"
+   */
+  id?: string | null
+  /**
+   * Текстовая строка для поиска по атрибутам сотрудника (внешний ID, имя, название должности)
+   * @example "Иван"
+   */
+  employee_text_query?: string | null
+  role_ids?: number[] | null
+  division_ids?: number[] | null
+  /**
+   * Включать в результат пользователей с датой создания больше указанной
+   * @example "2023-12-26 11:57:01 +00:00"
+   */
+  created_after?: string | null
+  /**
+   * Включать в результат пользователей с датой создания меньше указанной
+   * @example "2023-12-26 11:57:01 +00:00"
+   */
+  created_before?: string | null
+  sources?: string[] | null
+}
+
+export interface AdminPanelUsersGetCollectionRequest {
+  sort?: AdminPanelUsersCollectionSort
+  filter?: AdminPanelUsersCollectionFilter
+  pagination?: BaseOffsetPagination
+}
+
+export interface AdminPanelUsersGetCollectionSuccessResponse {
+  data?: {
+    success?: (UsersUserAttributeID &
+      UsersUserAttributeSource &
+      UsersUserAttributeCreatedAt & {
+        /** Сотрудник. NULL, если отсутствует. */
+        employee?:
+          | (EmployeesEmployeeAttributeID &
+              EmployeesEmployeeAttributeExternalID &
+              EmployeesEmployeeAttributeFirstName &
+              EmployeesEmployeeAttributeLastName & {
+                /** Текущая должность. NULL, если отсутствует. */
+                position?: PositionsPositionDefaultView
+              })
+          | null
+        /** Роль */
+        role?: RolesRoleDefaultView
+      })[]
+  }
+  meta?: {
+    pagination?: BaseOffsetPaginationMeta
+  }
+}
+
+export interface AdminPanelUsersArchiveCollectionRequest {
+  ids: string[]
+}
+
+export interface AdminPanelUsersRestoreCollectionRequest {
+  ids: string[]
+}
+
+export interface AdminPanelUsersImportCollectionRequest {
+  /**
+   * Импортируемый файл
+   * @format binary
+   */
+  file: File
+  /**
+   * Обновить данные пользователей, если они уже есть на платформе
+   * @example true
+   */
+  update_users?: boolean | null
+}
+
+export interface AdminPanelUsersImportCollectionSuccessResponse {
+  data?: {
+    /** Задача */
+    success?: TasksTaskDefaultObject
+  }
+}
+
+export interface AdminPanelUsersGetUserDetailsSuccessResponse {
+  data?: {
+    /** Сотрудник */
+    success?: AdminPanelUsersUserDetailsAttributeAccountId &
+      AdminPanelUsersUserDetailsAttributeAccountLogin &
+      AdminPanelUsersUserDetailsAttributeAccountCreatedAt &
+      AdminPanelUsersUserDetailsAttributeAccountUpdatedAt &
+      AdminPanelUsersUserDetailsAttributeAccountFirstName &
+      AdminPanelUsersUserDetailsAttributeAccountLastName &
+      AdminPanelUsersUserDetailsAttributeAccountEmail &
+      AdminPanelUsersUserDetailsAttributeRole &
+      AdminPanelUsersUserDetailsAttributeDivisionAccess &
+      AdminPanelUsersUserDetailsAttributeIndividualAccess & {
+        employee?: AdminPanelUsersUserDetailsAttributeEmployeeId &
+          AdminPanelUsersUserDetailsAttributeEmployeeFirstName &
+          AdminPanelUsersUserDetailsAttributeEmployeeMiddleName &
+          AdminPanelUsersUserDetailsAttributeEmployeeLastName &
+          AdminPanelUsersUserDetailsAttributeEmployeeEmail &
+          AdminPanelUsersUserDetailsAttributeEmployeePhone &
+          AdminPanelUsersUserDetailsAttributePosition &
+          AdminPanelUsersUserDetailsAttributeDivision &
+          AdminPanelUsersUserDetailsAttributeChiefs
+      }
+  }
+}
+
+export type AdminPanelUsersUpdateUserDetailsRequest = AdminPanelUsersUserDetailsAttributeAccountLogin &
+  AdminPanelUsersUserDetailsAttributeAccountPassword &
+  AdminPanelUsersUserDetailsAttributeAccountFirstName &
+  AdminPanelUsersUserDetailsAttributeAccountLastName &
+  AdminPanelUsersUserDetailsAttributeAccountEmail & {
+    /**
+     * ID роли
+     * @example 56
+     */
+    role_id?: number
+    /** ID элементов орг. структуры, к которым у пользователя есть доступ */
+    division_access_ids?: number[]
+    /** ID сотрудников, к которым у пользователя есть доступ в индивидуальном порядке */
+    individual_access_ids?: number[]
+    employee?: AdminPanelUsersUserDetailsAttributeEmployeeFirstName &
+      AdminPanelUsersUserDetailsAttributeEmployeeMiddleName &
+      AdminPanelUsersUserDetailsAttributeEmployeeLastName &
+      AdminPanelUsersUserDetailsAttributeEmployeeEmail &
+      AdminPanelUsersUserDetailsAttributeEmployeePhone & {
+        /**
+         * ID должности
+         * @example 256
+         */
+        position_id?: number
+        /**
+         * ID элемента орг. структуры, которому принадлежит сотрудник
+         * @example 256
+         */
+        division_id?: number
+        /** ID руководителей */
+        chief_ids?: string[]
+      }
+  }
+
+export type AdminPanelUsersCreateUserRequest = UtilRequiredKeys<
+  AdminPanelUsersUserDetailsAttributeAccountLogin,
+  "login"
+> &
+  UtilRequiredKeys<AdminPanelUsersUserDetailsAttributeAccountPassword, "password"> &
+  UtilRequiredKeys<AdminPanelUsersUserDetailsAttributeAccountFirstName, "first_name"> &
+  UtilRequiredKeys<AdminPanelUsersUserDetailsAttributeAccountLastName, "last_name"> &
+  UtilRequiredKeys<AdminPanelUsersUserDetailsAttributeAccountEmail, "email"> & {
+    /**
+     * ID роли
+     * @example 56
+     */
+    role_id: number
+    /** ID элементов орг. структуры, к которым у пользователя есть доступ */
+    division_access_ids?: number[]
+    /** ID сотрудников, к которым у пользователя есть доступ в индивидуальном порядке */
+    individual_access_ids?: number[]
+    employee?: AdminPanelUsersUserDetailsAttributeEmployeeFirstName &
+      AdminPanelUsersUserDetailsAttributeEmployeeMiddleName &
+      AdminPanelUsersUserDetailsAttributeEmployeeLastName &
+      AdminPanelUsersUserDetailsAttributeEmployeeEmail &
+      AdminPanelUsersUserDetailsAttributeEmployeePhone & {
+        /**
+         * ID должности
+         * @example 256
+         */
+        position_id?: number
+        /**
+         * ID элемента орг. структуры, которому принадлежит сотрудник
+         * @example 256
+         */
+        division_id?: number
+        /** ID руководителей */
+        chief_ids?: string[]
+      }
+  }
+
 export type QueryParamsType = Record<string | number, any>
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">
 
@@ -1968,7 +2399,7 @@ export enum ContentType {
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-  public baseUrl: string = "https://api.ipr.e-queo.xyz"
+  public baseUrl: string = useRuntimeConfig().public.apiBase
   private securityData: SecurityDataType | null = null
   private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"]
   private abortControllers = new Map<CancelToken, AbortController>()
@@ -2468,21 +2899,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/targets/{target_id}
      * @secure
      */
-    targetsGetTargetDetails: (
-      targetId: number,
-      query?: {
-        /**
-         * ID сотрудника. Если не указан, то пытаемся получить из текущего пользователя.
-         * @example 123
-         */
-        employee_id?: number
-      },
-      params: RequestParams = {}
-    ) =>
+    targetsGetTargetDetails: (targetId: number, params: RequestParams = {}) =>
       this.request<TargetsTargetDetailsSuccessResponse, BaseObjectNotFoundErrorCollectionResponse>({
         path: `/targets/${targetId}`,
         method: "GET",
-        query: query,
         secure: true,
         format: "json",
         ...params,
@@ -2617,21 +3037,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/targets/{target_id}/count-of-relations
      * @secure
      */
-    targetsGetCountOfRelations: (
-      targetId: number,
-      query?: {
-        /**
-         * ID сотрудника. Если не указан, то пытаемся получить из текущего пользователя.
-         * @example 123
-         */
-        employee_id?: number
-      },
-      params: RequestParams = {}
-    ) =>
+    targetsGetCountOfRelations: (targetId: number, params: RequestParams = {}) =>
       this.request<TargetsCountOfRelationsSuccessResponse, BaseObjectNotFoundErrorCollectionResponse>({
         path: `/targets/${targetId}/count-of-relations`,
         method: "GET",
-        query: query,
         secure: true,
         format: "json",
         ...params,
@@ -2646,21 +3055,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/targets/{target_id}/skills
      * @secure
      */
-    targetsGetTargetSkills: (
-      targetId: number,
-      query?: {
-        /**
-         * ID сотрудника. Если не указан, то пытаемся получить из текущего пользователя.
-         * @example 123
-         */
-        employee_id?: number
-      },
-      params: RequestParams = {}
-    ) =>
+    targetsGetTargetSkills: (targetId: number, params: RequestParams = {}) =>
       this.request<TargetsTargetSkillsSuccessResponse, BaseObjectNotFoundErrorCollectionResponse>({
         path: `/targets/${targetId}/skills`,
         method: "GET",
-        query: query,
         secure: true,
         format: "json",
         ...params,
@@ -2675,21 +3073,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/targets/{target_id}/materials
      * @secure
      */
-    targetsGetTargetMaterials: (
-      targetId: number,
-      query?: {
-        /**
-         * ID сотрудника. Если не указан, то пытаемся получить из текущего пользователя.
-         * @example 123
-         */
-        employee_id?: number
-      },
-      params: RequestParams = {}
-    ) =>
+    targetsGetTargetMaterials: (targetId: number, params: RequestParams = {}) =>
       this.request<TargetsTargetMaterialsSuccessResponse, BaseObjectNotFoundErrorCollectionResponse>({
         path: `/targets/${targetId}/materials`,
         method: "GET",
-        query: query,
         secure: true,
         format: "json",
         ...params,
@@ -2704,22 +3091,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/targets/{target_id}/materials/{material_id}
      * @secure
      */
-    targetsGetTargetMaterial: (
-      targetId: number,
-      materialId: number,
-      query?: {
-        /**
-         * ID сотрудника. Если не указан, то пытаемся получить из текущего пользователя.
-         * @example 123
-         */
-        employee_id?: number
-      },
-      params: RequestParams = {}
-    ) =>
+    targetsGetTargetMaterial: (targetId: number, materialId: number, params: RequestParams = {}) =>
       this.request<TargetsTargetMaterialSuccessResponse, BaseObjectNotFoundErrorCollectionResponse>({
         path: `/targets/${targetId}/materials/${materialId}`,
         method: "GET",
-        query: query,
         secure: true,
         format: "json",
         ...params,
@@ -2734,21 +3109,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/targets/{target_id}/comments
      * @secure
      */
-    targetsGetTargetComments: (
-      targetId: number,
-      query?: {
-        /**
-         * ID сотрудника. Если не указан, то пытаемся получить из текущего пользователя.
-         * @example 123
-         */
-        employee_id?: number
-      },
-      params: RequestParams = {}
-    ) =>
+    targetsGetTargetComments: (targetId: number, params: RequestParams = {}) =>
       this.request<TargetsTargetCommentsSuccessResponse, BaseObjectNotFoundErrorCollectionResponse>({
         path: `/targets/${targetId}/comments`,
         method: "GET",
-        query: query,
         secure: true,
         format: "json",
         ...params,
@@ -3373,24 +3737,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         format: "json",
         ...params,
       }),
-
-    /**
-     * @description Получить права доступа в отношении сотрудника.
-     *
-     * @tags Employees
-     * @name EmployeesGetAccessRightsByEmployee
-     * @summary 09.04. Получить права доступа в отношении сотрудника.
-     * @request GET:/employees/{employee_id}/access-rights
-     * @secure
-     */
-    employeesGetAccessRightsByEmployee: (employeeId: number, params: RequestParams = {}) =>
-      this.request<EmployeesAccessRightsByEmployeeSuccessResponse, BaseObjectNotFoundErrorCollectionResponse>({
-        path: `/employees/${employeeId}/access-rights`,
-        method: "GET",
-        secure: true,
-        format: "json",
-        ...params,
-      }),
   }
   divisions = {
     /**
@@ -3500,7 +3846,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/files/{file_id}/download
      * @secure
      */
-    filesDownloadOne: (fileId: string, params: RequestParams = {}) =>
+    filesDownloadOne: (fileId: number, params: RequestParams = {}) =>
       this.request<File, any>({
         path: `/files/${fileId}/download`,
         method: "GET",
@@ -3540,6 +3886,202 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<BaseEmptySuccessResponse, BaseValidationErrorCollectionResponse>({
         path: `/notifications/config`,
         method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+  }
+  admin = {
+    /**
+     * @description Список всех ролей в системе
+     *
+     * @tags AdminPanel
+     * @name AdminPanelGetRoles
+     * @summary 14.01. Список всех ролей в системе
+     * @request GET:/admin/roles
+     * @secure
+     */
+    adminPanelGetRoles: (params: RequestParams = {}) =>
+      this.request<AdminPanelRolesGetCollectionSuccessResponse, any>({
+        path: `/admin/roles`,
+        method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description Список возможных источников пользователей
+     *
+     * @tags AdminPanel
+     * @name AdminPanelGetUserSources
+     * @summary 14.02. Список возможных источников пользователей
+     * @request GET:/admin/users/sources
+     * @secure
+     */
+    adminPanelGetUserSources: (params: RequestParams = {}) =>
+      this.request<AdminPanelUserSourcesGetCollectionSuccessResponse, any>({
+        path: `/admin/users/sources`,
+        method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description Получить список пользователей (аккаунты + сотрудники)
+     *
+     * @tags AdminPanel
+     * @name AdminPanelGetUsers
+     * @summary 14.03. Получить список пользователей
+     * @request POST:/admin/users
+     * @secure
+     */
+    adminPanelGetUsers: (data: AdminPanelUsersGetCollectionRequest, params: RequestParams = {}) =>
+      this.request<AdminPanelUsersGetCollectionSuccessResponse, any>({
+        path: `/admin/users`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description Архивировать аккаунты и связанных с ними сотрудников
+     *
+     * @tags AdminPanel
+     * @name AdminPanelArchiveUsers
+     * @summary 14.04. Архивировать аккаунты и связанных с ними сотрудников
+     * @request POST:/admin/users/archive
+     * @secure
+     */
+    adminPanelArchiveUsers: (data: AdminPanelUsersArchiveCollectionRequest, params: RequestParams = {}) =>
+      this.request<BaseEmptySuccessResponse, BaseValidationErrorCollectionResponse>({
+        path: `/admin/users/archive`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description Восстановить из архива аккаунты и связанных с ними сотрудников
+     *
+     * @tags AdminPanel
+     * @name AdminPanelRestoreUsers
+     * @summary 14.05. Восстановить из архива аккаунты и связанных с ними сотрудников
+     * @request POST:/admin/users/restore
+     * @secure
+     */
+    adminPanelRestoreUsers: (data: AdminPanelUsersRestoreCollectionRequest, params: RequestParams = {}) =>
+      this.request<BaseEmptySuccessResponse, BaseValidationErrorCollectionResponse>({
+        path: `/admin/users/restore`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description Создать пользователя (аккаунт + сотрудник)
+     *
+     * @tags AdminPanel
+     * @name AdminPanelCreateUser
+     * @summary 14.06. Создать пользователя (аккаунт + сотрудник)
+     * @request POST:/admin/users/create
+     * @secure
+     */
+    adminPanelCreateUser: (data: AdminPanelUsersCreateUserRequest, params: RequestParams = {}) =>
+      this.request<AdminPanelUsersGetUserDetailsSuccessResponse, BaseValidationErrorCollectionResponse>({
+        path: `/admin/users/create`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description Импортировать пользователей из xlsx-файла
+     *
+     * @tags AdminPanel
+     * @name AdminPanelImportUsers
+     * @summary 14.07. Импортировать пользователей
+     * @request POST:/admin/users/import
+     * @secure
+     */
+    adminPanelImportUsers: (data: AdminPanelUsersImportCollectionRequest, params: RequestParams = {}) =>
+      this.request<AdminPanelUsersImportCollectionSuccessResponse, BaseValidationErrorCollectionResponse>({
+        path: `/admin/users/import`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description Скачать шаблон для импорта пользователей
+     *
+     * @tags AdminPanel
+     * @name AdminPanelGetTemplateToImportUsers
+     * @summary 14.08. Скачать шаблон для импорта пользователей
+     * @request GET:/admin/users/import/template
+     * @secure
+     */
+    adminPanelGetTemplateToImportUsers: (params: RequestParams = {}) =>
+      this.request<File, any>({
+        path: `/admin/users/import/template`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * @description Получить подробную информацию о пользователе (аккаунт + сотрудник)
+     *
+     * @tags AdminPanel
+     * @name AdminPanelGetUserDetails
+     * @summary 14.09. Получить подробную информацию о пользователе (аккаунт + сотрудник)
+     * @request GET:/admin/users/{user_id}/details
+     * @secure
+     */
+    adminPanelGetUserDetails: (userId: string, params: RequestParams = {}) =>
+      this.request<AdminPanelUsersGetUserDetailsSuccessResponse, BaseObjectNotFoundErrorCollectionResponse>({
+        path: `/admin/users/${userId}/details`,
+        method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description Обновить пользователя (аккаунт + сотрудник). Ни один из атрибутов не является обязательным. Если обновление атрибута не требуется, то его можно не указывать.
+     *
+     * @tags AdminPanel
+     * @name AdminPanelUpdateUserDetails
+     * @summary 14.10. Обновить пользователя (аккаунт + сотрудник)
+     * @request PUT:/admin/users/{user_id}/details/update
+     * @secure
+     */
+    adminPanelUpdateUserDetails: (
+      userId: string,
+      data: AdminPanelUsersUpdateUserDetailsRequest,
+      params: RequestParams = {}
+    ) =>
+      this.request<AdminPanelUsersGetUserDetailsSuccessResponse, BaseObjectNotFoundOrValidationErrorResponse>({
+        path: `/admin/users/${userId}/details/update`,
+        method: "PUT",
         body: data,
         secure: true,
         type: ContentType.Json,

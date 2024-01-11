@@ -256,9 +256,10 @@ const lastAttempt = computed(() => {
     <template #header-left>
       <button
         v-if="
-          !attempts.data.data?.success?.length ||
-          addNewAttempt ||
-          lastAttempt?.status === 'approval'
+          (!attempts.data.data?.success?.length ||
+            addNewAttempt ||
+            lastAttempt?.status === 'approval') &&
+          accessRights?.['app.idp.update_route'] === 'granted'
         "
         class="h-8 w-8 rounded-xl bg-neutral-50"
         data-test-id="isEditOpened"
@@ -362,7 +363,12 @@ const lastAttempt = computed(() => {
     v-if="isCancelPopupOpened"
     is-small
     :title="t('ipr.approval.cancel.title')"
-    @click-outside="isCancelPopupOpened = false"
+    @click-outside="
+      () => {
+        isCancelPopupOpened = false
+        emit('close')
+      }
+    "
   >
     <p class="w-[24.5rem] text-neutral">
       {{ t("ipr.approval.cancel.description") }}
@@ -378,7 +384,12 @@ const lastAttempt = computed(() => {
       <button
         class="button md primary"
         data-test-id="isCancelPopupOpened"
-        @click="isCancelPopupOpened = false"
+        @click="
+          () => {
+            isCancelPopupOpened = false
+            emit('close')
+          }
+        "
       >
         {{ t("ipr.approval.cancel.no") }}
       </button>

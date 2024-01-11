@@ -44,6 +44,12 @@ if (
   isEditOpened!.value = true
 }
 
+// Следим за изменением попытки
+watch(toRefs(props).attempt, (newValue) => {
+  // Добавляем этапы из попытки
+  stages.value = useStageConverter(newValue!.stages!)
+})
+
 // Если попытка согласования новая
 if (!props.attempt) {
   // Используем для нее маршрут по умолчанию
