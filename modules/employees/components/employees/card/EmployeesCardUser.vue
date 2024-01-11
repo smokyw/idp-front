@@ -28,7 +28,7 @@ defineProps<{
       >
         {{ useUserDisplay(employee).getFullName() }}
       </h4>
-      <p class="text-sm text-neutral-400">-</p>
+      <p class="text-sm text-neutral-400">{{ employee.position?.name }}</p>
     </div>
   </div>
 </template>

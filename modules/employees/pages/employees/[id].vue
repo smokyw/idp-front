@@ -8,6 +8,7 @@ import type {
 
 definePageMeta({
   layout: "no-sidebar",
+  middleware: "employees",
 })
 
 const { t } = useI18n()
@@ -61,7 +62,12 @@ watch(
     // Если есть выбранный ИПР
     if (newValue[0]) {
       // И он отличается от предыдущего
-      if (newValue[0]?.id !== oldValue[0]?.id) {
+      if (
+        newValue[0]?.id !== oldValue[0]?.id ||
+        (newValue[1] !== oldValue[1] &&
+          newValue[1].split("/")[1] === "employees" &&
+          newValue[1].split("/").length === 3)
+      ) {
         // Обновляем информацию о нем
         await getIdp()
       }
@@ -99,7 +105,7 @@ const idpProgress = computed(() => {
           <EmployeesWidget
             icon="SvgoBriefcase"
             :title="t('employees.page.position.currentPosition')"
-            :value="employee.data.data?.success?.position?.name!"
+            :value="employee.data.data?.success?.position?.name"
           />
           <EmployeesWidget
             icon="SvgoArrowCircleUp"
@@ -108,10 +114,13 @@ const idpProgress = computed(() => {
             "
             :title="t('employees.page.position.suitability')"
             :value="
-              t('employees.page.position.percent', {
-                number:
-                  employee.data.data?.success?.position?.percent_of_suitability,
-              })
+              employee.data.data?.success?.position?.percent_of_suitability
+                ? t('employees.page.position.percent', {
+                    number:
+                      employee.data.data?.success?.position
+                        ?.percent_of_suitability,
+                  })
+                : '−'
             "
           />
         </div>

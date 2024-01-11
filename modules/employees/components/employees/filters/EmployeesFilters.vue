@@ -147,15 +147,25 @@ const isDivisionsOpened = ref(false)
         </HeadlessDisclosure>
         <div class="p-4">
           <div
-            class="relative flex cursor-pointer items-center justify-between rounded-lg border border-neutral-200 bg-neutral-50 p-2 hover:bg-neutral-200"
+            class="relative flex cursor-pointer items-center justify-between rounded-lg border border-neutral-200 p-2 hover:bg-neutral-50"
             data-test-id="isDivisionsOpened"
             @click="isDivisionsOpened = true"
           >
             <p>{{ t("employees.filters.divisions.title") }}</p>
-            <Icon class="fill-neutral-400" name="SvgoDataflow" size="16" />
+            <div class="flex gap-x-2">
+              <LazyIcon
+                v-if="filters.divisions.length"
+                class="fill-neutral-400"
+                data-test-id="filters"
+                name="SvgoXClose"
+                size="16"
+                @click.stop="filters.divisions = []"
+              />
+              <Icon class="fill-neutral-400" name="SvgoDataflow" size="16" />
+            </div>
             <div
               v-if="filters.divisions.length"
-              class="absolute right-0 top-0 h-2 w-2 rounded-full bg-secondary"
+              class="absolute right-[.1875rem] top-[.1875rem] h-2 w-2 rounded-full bg-secondary"
             />
           </div>
         </div>

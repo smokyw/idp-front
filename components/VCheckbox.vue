@@ -7,7 +7,7 @@ defineProps<{
 }>()
 
 /** Значение чекбокса */
-const modelValue = defineModel({ local: true })
+const modelValue = defineModel()
 </script>
 
 <template>

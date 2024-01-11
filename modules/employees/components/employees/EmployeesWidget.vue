@@ -7,7 +7,7 @@ defineProps<{
   /** Заголовок виджета */
   title: string
   /** Значение виджета */
-  value: string
+  value: string | undefined
 }>()
 </script>
 
@@ -29,7 +29,7 @@ defineProps<{
     </div>
     <div class="flex flex-col gap-y-1">
       <label class="text-xs text-neutral">{{ title }}</label>
-      <h4 class="text-sm font-medium">{{ value }}</h4>
+      <h4 class="text-sm font-medium">{{ value ?? "−" }}</h4>
     </div>
   </div>
 </template>

@@ -214,7 +214,7 @@ const isSomeSelected = computed(() => {
       <div
         v-for="(direction, column) in columns"
         :key="column"
-        class="relative flex w-max cursor-pointer items-center gap-x-1 p-4"
+        class="relative flex w-max cursor-pointer items-center gap-x-1 bg-white p-4"
         data-test-id="selectSort"
         @click="selectSort(column, direction)"
       >

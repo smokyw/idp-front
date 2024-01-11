@@ -2,8 +2,6 @@
 import type { HttpResponse, TargetsTargetDetailsSuccessResponse } from "~/Api"
 
 const props = defineProps<{
-  /** `ID` сотрудника */
-  employeeId?: number
   /** `ID цели` */
   id: number
 }>()
@@ -19,9 +17,6 @@ const target = ref<HttpResponse<TargetsTargetDetailsSuccessResponse>>()
 async function getTarget() {
   target.value = await useApi().targets.targetsGetTargetDetails(
     toRefs(props).id.value,
-    {
-      employee_id: props.employeeId,
-    },
     {
       headers: useAuth().generateHeaders(),
     }

@@ -38,7 +38,7 @@ export const useUserStore = defineStore(
     persist: {
       paths: ["rememberUser"],
       storage: persistedState.cookiesWithOptions({
-        maxAge: 60 * 60 * 24 * 14, // 14 дней FIXME: Вернуть на 90 дней после того, как будет исправлено https://github.com/nuxt/nuxt/pull/24253.
+        maxAge: 60 * 60 * 24 * 90, // 90 дней
         path: "/",
         sameSite: "lax",
       }),

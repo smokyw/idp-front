@@ -1,7 +1,5 @@
 <script setup lang="ts">
 const props = defineProps<{
-  /** `ID` сотрудника */
-  employeeId?: number
   /** `ID цели` */
   id: number
 }>()
@@ -20,9 +18,6 @@ const comments = ref()
 async function getComments() {
   comments.value = await useApi().targets.targetsGetTargetComments(
     toRefs(props).id.value,
-    {
-      employee_id: props.employeeId,
-    },
     {
       headers: useAuth().generateHeaders(),
     }

@@ -19,6 +19,8 @@ const props = defineProps<{
 const { t } = useI18n()
 const localePath = useLocalePath()
 
+const userStore = useUserStore()
+
 /** Количество связанных объектов цели */
 const targetRelations = ref<TargetsCountOfRelationsSuccessResponse>()
 
@@ -27,15 +29,9 @@ const targetRelations = ref<TargetsCountOfRelationsSuccessResponse>()
  */
 async function getTargetRelations() {
   targetRelations.value = (
-    await useApi().targets.targetsGetCountOfRelations(
-      toRefs(props).id.value,
-      {
-        employee_id: props.employeeId,
-      },
-      {
-        headers: useAuth().generateHeaders(),
-      }
-    )
+    await useApi().targets.targetsGetCountOfRelations(toRefs(props).id.value, {
+      headers: useAuth().generateHeaders(),
+    })
   ).data
 }
 
@@ -85,8 +81,19 @@ const filteredTabs = computed(() => {
         : navigateTo(localePath('/'))
     "
   >
-    <template v-if="!employeeId" #header-right>
-      <TargetsEditActions :id="id" :idp-id="idpId" :parent-idp="idp" />
+    <template
+      v-if="
+        userStore.checkRight('app.targets.update_target') ||
+        userStore.checkRight('app.targets.delete_target')
+      "
+      #header-right
+    >
+      <LazyTargetsEditActions
+        :id="id"
+        :employee-id="employeeId"
+        :idp-id="idpId"
+        :parent-idp="idp"
+      />
     </template>
     <HeadlessTabGroup>
       <div class="-mt-4 mb-8 w-full overflow-x-auto">

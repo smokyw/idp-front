@@ -115,6 +115,13 @@ const targetsData = ref<TargetsTargetToCreate | TargetsTargetToUpdate>({
   name: toRefs(props).target?.value?.name,
 })
 
+const employeesUrl = localePath({
+  path: `/employees/${toRefs(props).employeeId.value}`,
+  query: {
+    year: toRefs(props).year.value,
+  },
+})
+
 /**
  * Функция для отправки созданной цели.
  */
@@ -159,7 +166,7 @@ function submitTarget() {
       .then(() => {
         // Редиректим пользователя на главную страницу
         props.employeeId
-          ? navigateTo(localePath(`/employees/${props.employeeId}`))
+          ? navigateTo(employeesUrl)
           : navigateTo(localePath("/"))
 
         // Оповещаем об успешном изменении цели
@@ -189,7 +196,7 @@ function submitTarget() {
       .then(() => {
         // Редиректим пользователя на главную страницу
         props.employeeId
-          ? navigateTo(localePath(`/employees/${props.employeeId}`))
+          ? navigateTo(employeesUrl)
           : navigateTo(localePath("/"))
 
         // Оповещаем об успешном создании цели
@@ -226,7 +233,7 @@ const targetsEditMaterials = ref<InstanceType<
       returnTargetLocally
         ? emit('close')
         : employeeId
-          ? navigateTo(localePath(`/employees/${employeeId}`))
+          ? navigateTo(employeesUrl)
           : navigateTo(localePath('/'))
     "
   >
@@ -238,7 +245,7 @@ const targetsEditMaterials = ref<InstanceType<
           returnTargetLocally
             ? emit('close')
             : employeeId
-              ? navigateTo(localePath(`/employees/${employeeId}`))
+              ? navigateTo(employeesUrl)
               : navigateTo(localePath('/'))
         "
       >

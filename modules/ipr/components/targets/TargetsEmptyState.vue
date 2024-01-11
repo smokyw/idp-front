@@ -26,7 +26,7 @@ const { t } = useI18n()
     <NuxtLinkLocale
       v-if="
         targetsStatus === 'active' &&
-        useUserStore().checkRight('app.targets.create_own_target')
+        useUserStore().checkRight('app.targets.create_target')
       "
       class="button primary lg"
       :to="{

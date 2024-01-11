@@ -33,7 +33,17 @@ export default function () {
       })
 
       // Выставляем токены от API
-      setTokens(response.data)
+      await setTokens(response.data)
+
+      // Выставляем данные пользователя
+      const userStore = useUserStore()
+      const user = await useApi().users.usersGetProfile({
+        headers: generateHeaders(),
+      })
+      // Выставляем пользователя
+      userStore.user = user.data.data?.success
+      // Выставляем права доступа пользователя
+      userStore.accessRights = user.data.data?.success?.access_rights
 
       // Редиректим на главную страницу
       void navigateTo(localePath("/"))
@@ -79,7 +89,7 @@ export default function () {
    *
    * @param apiResponse - ответ от API с токенами.
    */
-  function setTokens(apiResponse: AuthLoginSuccessResponse) {
+  async function setTokens(apiResponse: AuthLoginSuccessResponse) {
     const userStore = useUserStore()
 
     /** Объект с токенами от API */
@@ -92,7 +102,7 @@ export default function () {
     })
     /** `refresh`-токен */
     const refreshToken = useCookie("refresh_token", {
-      maxAge: userStore.rememberUser ? 60 * 60 * 24 * 14 : undefined, // 14 дней FIXME: Вернуть на 90 дней после того, как будет исправлено https://github.com/nuxt/nuxt/pull/24253.
+      maxAge: userStore.rememberUser ? 60 * 60 * 24 * 90 : undefined, // 14 дней
       sameSite: "lax",
     })
 
@@ -135,7 +145,8 @@ export default function () {
    */
   function generateHeaders() {
     return {
-      Authorization: "Bearer " + useCookie("access_token").value,
+      Authorization:
+        "Bearer " + useCookie("access_token", { readonly: true }).value,
     }
   }
 

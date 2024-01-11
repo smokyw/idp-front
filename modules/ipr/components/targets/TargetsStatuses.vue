@@ -78,10 +78,10 @@ watch(
   () => [props.idpId, useRoute().path],
   async (newValue, oldValue) => {
     if (
-      newValue[1] === "/" ||
-      (newValue[1].split("/")[1] === "employees" &&
-        newValue[1].split("/").length === 3 &&
-        newValue[0] !== oldValue[0])
+      useArrayDifference(newValue, oldValue).value.length &&
+      (newValue[1] === "/" ||
+        (newValue[1].split("/")[1] === "employees" &&
+          newValue[1].split("/").length === 3))
     ) {
       // Обновляем доступные статусы
       statuses.value = await getStatuses()

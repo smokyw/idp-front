@@ -2,6 +2,8 @@
 import type { IdpRouteUser } from "@/Api"
 
 const props = defineProps<{
+  /** Дополнительные согласующие */
+  additionalApprovers?: IdpRouteUser[]
   /** `ID` всех согласующих */
   approverIds: string[]
   /** Отключен ли выбор */
@@ -54,6 +56,9 @@ const approvers = ref(
     (await getApprovers()).data.data?.success
 )
 
+// Добавляем согласующих в список
+approvers.value.push(...(toRefs(props).additionalApprovers.value ?? []))
+
 /** Отфильтрованные согласующие */
 const filteredApprovers = computed(() => {
   return approvers.value?.filter(
@@ -75,7 +80,7 @@ watch(
 )
 
 /** Выбранный участник */
-const modelValue = defineModel<string>({ local: true, required: true })
+const modelValue = defineModel<string>({ required: true })
 
 /** Выбранный согласующий */
 const selectedApprover = computedWithControl(modelValue, () => {

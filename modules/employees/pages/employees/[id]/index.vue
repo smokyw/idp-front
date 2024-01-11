@@ -14,10 +14,34 @@ const emit = defineEmits<{
   updateIdp: []
 }>()
 
+definePageMeta({
+  middleware: "employees",
+})
+
 const { t } = useI18n()
 const localePath = useLocalePath()
 
 const route = useRoute("employees-id___ru")
+
+/**
+ * Данная переменная определяет, находится ли пользователь на правильной ссылке.
+ *
+ * Она нужна из-за бага, который возникает следующим путем:
+ *
+ * 1. Открыть профиль пользователя 1 со списка сотрудников
+ * 2. Открыть профиль пользователя 2 со списка сотрудников (у пользователя есть цели)
+ * 3. Создать цель
+ *
+ * При переходах между страницами, все предыдущие страницы остаются в памяти.
+ * Когда создается цель, каждая из таких страниц пытается выполнить все свои скрипты.
+ *
+ * Значение в `useRoute` остается неизменным для таких страниц, а `useRouter` показывает настоящую ссылку.
+ * Переменная сравнивает, на какой странице действительно находится пользователь, и выполняет скрипты только этой страницы.
+ */
+const isRouteRight = computed(() => {
+  return route.params.id === useRouter().currentRoute.value.params.id
+})
+
 /** `ID` ИПР */
 const idpId = route.query.idpId
 
@@ -30,7 +54,7 @@ const selectedIdp =
   inject<Ref<IdpIdpDetailsBriefView | undefined>>("selectedIdp")
 
 /** Годы, доступные пользователю */
-const idps = ref(await getIdps())
+const idps = ref(isRouteRight.value ? await getIdps() : undefined)
 
 /**
  * Функция для получения списка ИПР.
@@ -53,23 +77,23 @@ const selectedIdpYear = ref<Option<number>>()
 
 // При изменении выбранного года
 watch(selectedIdpYear, () => {
-  // Изменяем параметр в ссылке
-  navigateTo(localePath(route.path + "?year=" + selectedIdpYear.value?.id))
+  if (isRouteRight.value) {
+    // Изменяем параметр в ссылке
+    navigateTo(
+      localePath({
+        path: `/employees/${props.employeeId}`,
+        query: {
+          year: selectedIdpYear.value?.id,
+        },
+      })
+    )
 
-  // Обновляем выбранный ИПР
-  selectedIdp!.value = idps.value.data.data?.success?.find(
-    (idp) => idp.year === selectedIdpYear.value?.id
-  )
+    // Обновляем выбранный ИПР
+    selectedIdp!.value = idps.value?.data.data?.success?.find(
+      (idp) => idp.year === selectedIdpYear.value?.id
+    )
+  }
 })
-
-// ПРАВА ДОСТУПА
-const accessRights =
-  await useApi().employees.employeesGetAccessRightsByEmployee(
-    toRefs(props).employeeId.value,
-    {
-      headers: useAuth().generateHeaders(),
-    }
-  )
 
 /**
  * Функция для создания ИПР
@@ -136,6 +160,8 @@ const isDeleteIdpPopupOpened = ref(false)
  * Нужен для перерисовки компонента при создании нового ИПР.
  */
 const yearPickerKey = ref(0)
+
+const canCreateIdp = useUserStore().checkRight("app.idp.create_idp")
 </script>
 
 <template>
@@ -157,44 +183,35 @@ const yearPickerKey = ref(0)
         <EmployeesPageStatus
           v-if="idp"
           :key="idp.id"
-          :can-delete-idp="
-            accessRights.data.data?.success?.['app.idp.delete_idp'] ===
-            'granted'
-          "
           :idp="idp"
           @delete-idp="isDeleteIdpPopupOpened = true"
           @update-idp="emit('updateIdp')"
         />
       </div>
-      <div
+      <TargetsNoPlan
         v-if="!selectedIdp"
-        class="flex h-48 flex-col items-center justify-center gap-y-6 text-center"
-      >
-        <div class="flex flex-col gap-y-2">
-          <h2 class="text-lg font-semibold">
-            {{ t("employees.page.noIdp.title") }}
-          </h2>
-          <p class="text-neutral">
-            {{ t("employees.page.noIdp.description") }}
-          </p>
-        </div>
-        <button
-          v-if="
-            accessRights.data.data?.success?.['app.idp.create_idp'] ===
-            'granted'
-          "
-          class="button primary md"
-          data-test-id="isCreateIdpPopupOpened"
-          @click="isCreateIdpPopupOpened = true"
-        >
-          {{ t("employees.page.noIdp.new", { year: selectedIdpYear?.id }) }}
-        </button>
-      </div>
+        :button="
+          canCreateIdp
+            ? t('employees.page.noIdp.new', { year: selectedIdpYear?.id })
+            : undefined
+        "
+        :description="
+          t(
+            `employees.page.noIdp.${
+              canCreateIdp ? 'description' : 'noRightDescription'
+            }`
+          )
+        "
+        :title="
+          t(`employees.page.noIdp.${canCreateIdp ? 'title' : 'noRightTitle'}`)
+        "
+        @button-clicked="isCreateIdpPopupOpened = true"
+      />
     </div>
     <LazyEmployeesPageTargets
       v-if="selectedIdp"
-      :access-rights="accessRights.data.data?.success"
       :employee-id="employeeId"
+      :idp="idp"
       :selected-idp="selectedIdp"
     />
     <!--

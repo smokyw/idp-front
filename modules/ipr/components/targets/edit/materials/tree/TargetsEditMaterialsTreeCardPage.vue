@@ -30,7 +30,6 @@ const material: HttpResponse<TargetsTargetMaterialSuccessResponse> =
     ? useApi().targets.targetsGetTargetMaterial(
         toRefs(props).targetId?.value ?? 0,
         toRefs(props).id.value,
-        {},
         params
       )
     : useApi().materials.materialsGetMaterialDetails(

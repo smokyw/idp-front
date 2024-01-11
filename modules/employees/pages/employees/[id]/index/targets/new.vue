@@ -1,5 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
+  middleware: "employees",
   scrollToTop: false,
 })
 
@@ -14,5 +15,11 @@ const idpId = Number(route.query.idpId)
 </script>
 
 <template>
-  <TargetsEdit :employee-id="Number(route.params.id)" :idp-id="idpId" />
+  <div>
+    <TargetsEdit
+      :employee-id="Number(route.params.id)"
+      :idp-id="idpId"
+      :year="Number(route.query.year)"
+    />
+  </div>
 </template>

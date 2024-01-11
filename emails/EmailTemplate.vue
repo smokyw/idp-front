@@ -159,7 +159,7 @@ defineProps<Email>()
           <EImg
             class="ml-6 object-contain"
             height="48"
-            src="https://api.ipr.e-queo.xyz/images/reset_password_email_logo_240_48_ru.png"
+            src="https://api.ipr-stand.e-queo.xyz/images/reset_password_email_logo_240_48_ru.png"
             width="240"
           />
           <div class="mt-6 rounded-3xl bg-white p-8">

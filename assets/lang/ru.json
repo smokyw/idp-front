@@ -1,5 +1,45 @@
 {
   "admin": {
+    "employees": {
+      "accounts": "0 аккаунтов | {n} аккаунт | {n} аккаунта | {n} аккаунтов",
+      "columns": {
+        "created_at": "Добавлен",
+        "employee": "Сотрудник",
+        "id": "ID",
+        "role": "Роль",
+        "source": "Интеграция"
+      },
+      "employeesPage": {
+        "add": "Добавить аккаунт",
+        "id": "ID {id}",
+        "tabs": {
+          "account": "Данные об аккаунте",
+          "employee": "Данные сотрудника",
+          "role": "Роль"
+        }
+      },
+      "filters": {
+        "archive": {
+          "false": "Аккаунты",
+          "true": "Архив"
+        },
+        "date": "Добавлен",
+        "divisions": {
+          "selectDivision": "Выберите подразделение",
+          "title": "Организационная структура"
+        },
+        "roles": "Роли",
+        "sources": {
+          "title": "Интеграция",
+          "values": {
+            "equeo": "Эквио",
+            "idp": "ИПР",
+            "other": "Прочее"
+          }
+        }
+      },
+      "ipr": "Просмотр ИПР"
+    },
     "search": "Поиск пользователя по имени, email, ID или должности"
   },
   "asyncActions": {
@@ -157,6 +197,8 @@
       "noIdp": {
         "description": "Откройте ИПР, чтобы сотрудник смог приступить к обучению.",
         "new": "Открыть ИПР {year}",
+        "noRightDescription": "",
+        "noRightTitle": "У вас нет права открыть ИПР",
         "title": "У сотрудника пока нет ИПР"
       },
       "position": {
@@ -475,25 +517,39 @@
     }
   },
   "system": {
+    "add": "Добавить",
+    "all": "Все",
     "apply": "Применить",
     "cancel": "Отмена",
     "continue": "Продолжить",
     "create": "Создать",
+    "created": "Создано: {date}",
     "default": "Сделать по умолчанию",
     "delete": "Удалить",
     "download": "Скачать",
     "edit": "Редактировать",
+    "email": "Email",
     "emptyFilters": "Попробуйте настроить иначе фильтры или воспользоваться функцией поиска для точного результата.",
     "emptySearch": "К сожалению, по вашему запросу ничего не найдено.",
+    "fatherName": "Отчество",
     "filters": "Фильтры",
+    "firstName": "Имя",
+    "from": "От",
+    "generate": "Сгенерировать",
+    "lastName": "Фамилия",
+    "login": "Логин",
     "notSelected": "Не выбрано",
     "open": "Открыть",
+    "password": "Пароль",
     "percent": "{number}%",
+    "phone": "Телефон",
     "reset": "Сбросить",
     "save": "Сохранить",
     "search": "Поиск",
     "select": "Выбрать {number}",
     "send": "Отправить",
-    "showResults": "Показывать по: {number}"
+    "showResults": "Показывать по: {number}",
+    "to": "До",
+    "updated": "Обновлено: {date}"
   }
 }

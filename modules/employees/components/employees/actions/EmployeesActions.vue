@@ -15,6 +15,8 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 
+const userStore = useUserStore()
+
 /** Тип действия */
 type ActionId =
   | "createIdp"
@@ -25,6 +27,8 @@ type ActionId =
 
 /** Действие */
 interface Action {
+  /** Связанное право доступа */
+  accessRight: boolean
   /** Иконка действия */
   icon: string
   /** `ID` действия */
@@ -34,22 +38,27 @@ interface Action {
 /** Список действий */
 const actions = [
   {
+    accessRight: userStore.checkRight("app.idp.create_idp"),
     icon: "SvgoShare",
     id: "createIdp",
   },
   {
+    accessRight: true,
     icon: "SvgoCheckCircle",
     id: "approveIdp",
   },
   {
+    accessRight: true,
     icon: "SvgoInfoCircle",
     id: "rejectIdp",
   },
   {
+    accessRight: userStore.checkRight("app.targets.create_target"),
     icon: "SvgoPlusSquare",
     id: "addTarget",
   },
   {
+    accessRight: userStore.checkRight("app.idp.generate_reports"),
     icon: "SvgoCopy",
     id: "generateReport",
   },
@@ -108,7 +117,7 @@ async function sendActionRequest(action: ActionId) {
 
 <template>
   <div
-    class="fixed bottom-20 flex gap-x-1 overflow-hidden rounded-lg border border-neutral-50 bg-white shadow-lg"
+    class="fixed bottom-20 left-1/2 flex -translate-x-1/2 gap-x-1 overflow-hidden rounded-lg border border-neutral-50 bg-white shadow-lg"
   >
     <div
       class="flex h-[3.25rem] w-[3.25rem] items-center justify-center bg-primary text-display-xs font-medium text-white"
@@ -117,7 +126,9 @@ async function sendActionRequest(action: ActionId) {
     </div>
     <div class="flex gap-x-6 py-1">
       <button
-        v-for="action in actions"
+        v-for="action in actions.filter(
+          (innerAction) => innerAction.accessRight
+        )"
         :key="action.id"
         class="group flex flex-col items-center justify-center rounded-lg px-3 hover:bg-neutral-50"
         data-test-id="selectedAction"

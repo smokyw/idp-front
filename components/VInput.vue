@@ -29,7 +29,7 @@ withDefaults(
 )
 
 /** Значение инпута */
-const modelValue = defineModel<Date | number | string>({ local: true })
+const modelValue = defineModel<Date | number | string>()
 </script>
 
 <template>
